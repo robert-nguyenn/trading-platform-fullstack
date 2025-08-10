@@ -60,6 +60,40 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 8s ease infinite;
   }
+
+  /* Force light mode for landing page */
+  .light-mode-landing {
+    color-scheme: light !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+  
+  .light-mode-landing * {
+    color-scheme: light !important;
+  }
+  
+  /* Override dark mode variables for landing page */
+  .light-mode-landing {
+    --background: 0 0% 100% !important;
+    --foreground: 210 40% 8% !important;
+    --card: 0 0% 100% !important;
+    --card-foreground: 210 40% 8% !important;
+    --popover: 0 0% 100% !important;
+    --popover-foreground: 210 40% 8% !important;
+    --primary: 158 64% 52% !important;
+    --primary-foreground: 0 0% 98% !important;
+    --secondary: 210 40% 96% !important;
+    --secondary-foreground: 210 40% 10% !important;
+    --muted: 210 40% 96% !important;
+    --muted-foreground: 215 13% 45% !important;
+    --accent: 158 58% 45% !important;
+    --accent-foreground: 0 0% 98% !important;
+    --destructive: 0 84% 60% !important;
+    --destructive-foreground: 0 0% 98% !important;
+    --border: 220 13% 91% !important;
+    --input: 220 13% 91% !important;
+    --ring: 158 64% 52% !important;
+  }
 }
 
 @keyframes float {

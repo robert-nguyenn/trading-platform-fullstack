@@ -5,11 +5,11 @@ import Footers from "../components/landing/Footer"
 
 export default function Page() {
   return (
-    <>
+    <div className="light-mode-landing">
       <Header />
       <HeroSection />
       <CTAsections />
       <Footers />
-    </>
+    </div>
   )
 }

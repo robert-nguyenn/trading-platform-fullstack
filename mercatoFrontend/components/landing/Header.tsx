@@ -1,69 +1,71 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, Sparkles } from "lucide-react";
+import { Menu, TrendingUp } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="w-full relative">
-      {/* Background with subtle gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-emerald-50/50 via-white to-emerald-50/50"></div>
-
-      <div className="relative w-full px-4 py-6 max-w-7xl mx-auto">
+    <header className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+      <div className="w-full px-6 py-4 max-w-7xl mx-auto">
         <nav className="flex items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-3 group">
-            <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center shadow-lg group-hover:shadow-emerald-200 transition-all duration-300">
-              <Sparkles className="h-5 w-5 text-white" />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-emerald-400/20 to-transparent"></div>
+            <div className="relative h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+              <TrendingUp className="h-5 w-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-gray-900">
               Mercato
             </span>
           </div>
 
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="#features"
-              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group"
+              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group py-2"
             >
               Features
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="#how-it-works"
-              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group"
+              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group py-2"
             >
               How It Works
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
-              href="#about"
-              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group"
+              href="#pricing"
+              className="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors duration-200 relative group py-2"
             >
-              About
+              Pricing
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
             </Link>
 
-            <div className="flex items-center gap-3">
+            {/* Auth Buttons */}
+            <div className="flex items-center gap-3 ml-4">
               <Link href="/login">
                 <Button
-                  variant="outline"
-                  className="text-sm border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200"
+                  variant="ghost"
+                  className="text-sm text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/50 transition-all duration-200"
                 >
                   Sign In
                 </Button>
               </Link>
-              <Button className="text-sm bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-lg hover:shadow-emerald-200 transition-all duration-300 transform hover:scale-105">
-                Request Access
-              </Button>
+              <Link href="/signup">
+                <Button className="text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 px-6">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
 
+          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden hover:bg-emerald-50"
+            className="md:hidden hover:bg-gray-100"
           >
-            <Menu className="h-5 w-5 text-emerald-700" />
+            <Menu className="h-5 w-5 text-gray-700" />
           </Button>
         </nav>
       </div>

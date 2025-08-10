@@ -1,101 +1,102 @@
+import { Users, GraduationCap, Briefcase, TrendingUp } from "lucide-react"
+
 export default function WhoIsItForSection() {
   return (
-    <section className="py-20 w-full">
-      <div className="w-full px-4 max-w-7xl mx-auto">
+    <section className="py-20 w-full bg-white">
+      <div className="w-full px-6 max-w-7xl mx-auto">
+        {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900">For the Investor With Ideas</h2>
-          <p className="mt-6 text-lg text-gray-600">
-            Mercato is designed for students, professionals, and curious traders who want to move beyond passive
-            investing and basic charting. If you follow the markets, have unique insights, and want a systematic way to
-            act on them without coding, Mercato is your platform.
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Built for traders who think differently
+          </h2>
+          <p className="text-xl text-gray-600 leading-relaxed">
+            Whether you&apos;re a student testing theories, a professional with market insights, 
+            or an active trader seeking better tools—Mercato is designed for you.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-lg border border-gray-200 text-center">
-            <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-gray-800"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
+        {/* User Types Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          
+          {/* Retail Investors */}
+          <div className="text-center group">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-200 transition-colors duration-300">
+              <Users className="h-8 w-8 text-emerald-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-4">Retail Investors</h3>
-            <p className="text-gray-600">
-              Ambitious traders who want institutional-grade tools without the complexity of coding or expensive
-              platforms.
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Active Traders</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Individual investors who want sophisticated strategies without the complexity. 
+              Move beyond basic buy-and-hold with AI-powered automation.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg border border-gray-200 text-center">
-            <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-gray-800"
-              >
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                <path d="M6 12v5c3 3 9 3 12 0v-5" />
-              </svg>
+          {/* Students */}
+          <div className="text-center group">
+            <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-200 transition-colors duration-300">
+              <GraduationCap className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-4">Students & Learners</h3>
-            <p className="text-gray-600">
-              Finance and economics students who want to test theories and learn by doing, without the barrier of
-              complex programming.
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Students & Learners</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Finance students and curious learners who want to test theories and learn by doing. 
+              No coding required—just your ideas and insights.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg border border-gray-200 text-center">
-            <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-gray-800"
-              >
-                <rect width="16" height="20" x="4" y="2" rx="2" />
-                <path d="M9 22v-4h6v4" />
-                <path d="M8 6h.01" />
-                <path d="M16 6h.01" />
-                <path d="M12 6h.01" />
-                <path d="M8 10h.01" />
-                <path d="M16 10h.01" />
-                <path d="M12 10h.01" />
-                <path d="M8 14h.01" />
-                <path d="M16 14h.01" />
-                <path d="M12 14h.01" />
-              </svg>
+          {/* Professionals */}
+          <div className="text-center group">
+            <div className="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-200 transition-colors duration-300">
+              <Briefcase className="h-8 w-8 text-purple-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-4">Data-Driven Professionals</h3>
-            <p className="text-gray-600">
-              Professionals who understand markets but lack the time or technical skills to implement their insights
-              systematically.
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Busy Professionals</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Industry experts with market insights but limited time for manual trading. 
+              Automate your expertise with systematic strategies.
             </p>
+          </div>
+        </div>
+
+        {/* Success Stories Preview */}
+        <div className="bg-gray-50 rounded-2xl p-8 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Join thousands of successful traders
+            </h3>
+            <p className="text-gray-600 mb-8">
+              From day traders to long-term investors, our community is building smarter strategies every day.
+            </p>
+            
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-emerald-600" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-900">5,000+</div>
+                  <div className="text-sm text-gray-600">Active Users</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-900">50,000+</div>
+                  <div className="text-sm text-gray-600">Strategies Created</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-purple-600" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-bold text-gray-900">$10M+</div>
+                  <div className="text-sm text-gray-600">Assets Managed</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

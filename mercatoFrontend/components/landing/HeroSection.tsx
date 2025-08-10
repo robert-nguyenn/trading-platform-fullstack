@@ -1,155 +1,159 @@
-import { ArrowRight, PlayCircle, TrendingUp, BarChart3, Brain, Zap } from "lucide-react"
+import { ArrowRight, PlayCircle, TrendingUp, BarChart3, Brain, Zap, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function HeroSection() {
   return (
-    <section className="w-full relative overflow-hidden">
-      {/* Enhanced background with multiple gradients */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-blue-50"></div>
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-emerald-100/30 to-transparent"></div>
-      
-      <div className="relative w-full px-4 py-20 md:py-32 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section className="w-full bg-gradient-to-b from-white via-gray-50/30 to-white overflow-hidden">
+      <div className="w-full px-6 py-16 md:py-24 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content */}
           <div className="space-y-8 animate-fade-in">
-            {/* Announcement badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-200 shadow-sm">
+            {/* Status Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-emerald-700">Now in Beta</span>
+              <span className="text-sm font-medium">Early Access Available</span>
             </div>
             
+            {/* Main Heading */}
             <div className="space-y-6">
-              <h1 className="font-bold text-5xl md:text-6xl lg:text-7xl leading-tight">
-                <span className="text-gray-900">Automate Your</span>
+              <h1 className="font-bold text-4xl md:text-5xl lg:text-6xl leading-tight text-gray-900">
+                Build Trading Strategies
                 <br />
-                <span className="bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-600 bg-clip-text text-transparent">
-                  Trading Edge.
-                </span>
-                <br />
-                <span className="text-gray-700 text-4xl md:text-5xl lg:text-6xl">No Code Needed.</span>
+                <span className="text-emerald-600">Without Code</span>
               </h1>
               
               <p className="text-xl text-gray-600 max-w-lg leading-relaxed">
-                Mercato is the intelligent, no-code platform that turns your market insights—from macro events to earnings
-                calls—into <span className="font-semibold text-emerald-700">executable trading strategies</span>.
+                Transform market insights into profitable trading strategies using AI. 
+                From earnings calls to macro events—no programming required.
               </p>
             </div>
             
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 shadow-xl hover:shadow-emerald-200 transition-all duration-300 transform hover:scale-105 text-lg px-8 py-4"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-4 text-lg"
               >
-                Request Early Access
+                Start Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-300 text-lg px-8 py-4"
+                className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 px-8 py-4 text-lg"
               >
                 <PlayCircle className="mr-2 h-5 w-5" />
                 Watch Demo
               </Button>
             </div>
             
-            <div className="flex items-center gap-4 pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span>Connect your broker</span>
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center gap-6 pt-4 text-sm text-gray-600">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span>No credit card required</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span>Start paper trading</span>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span>14-day free trial</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span>Cancel anytime</span>
               </div>
             </div>
           </div>
 
-          {/* Enhanced visualization */}
-          <div className="relative h-[500px] w-full animate-scale-in" style={{ animationDelay: "0.3s" }}>
-            <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-white via-emerald-50 to-blue-50 border border-emerald-200/50 shadow-2xl backdrop-blur-sm">
+          {/* Right Visualization */}
+          <div className="relative h-[500px] w-full animate-scale-in lg:animate-none lg:opacity-100" style={{ animationDelay: "0.3s" }}>
+            <div className="absolute inset-0 rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-2xl">
               
-              {/* Central hub with enhanced design */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  {/* Outer rings with better animations */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-2 border-emerald-200/30 animate-pulse"></div>
-                  <div 
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border-2 border-emerald-300/40 animate-pulse"
-                    style={{ animationDelay: "0.5s" }}
-                  ></div>
-                  <div 
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border-2 border-emerald-400/50 animate-pulse"
-                    style={{ animationDelay: "1s" }}
-                  ></div>
-                  
-                  {/* Central core with gradient */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-lg flex items-center justify-center">
-                    <Brain className="h-10 w-10 text-white" />
+              {/* Dashboard Preview */}
+              <div className="h-full p-6 bg-gradient-to-br from-gray-50 to-white">
+                
+                {/* Top Bar */}
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+                      <TrendingUp className="h-4 w-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-gray-900">Strategy Builder</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                  </div>
+                </div>
+
+                {/* Content Cards */}
+                <div className="space-y-4">
+                  {/* AI Analysis Card */}
+                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-float">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-emerald-100 rounded-lg">
+                        <Brain className="h-4 w-4 text-emerald-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900 text-sm">AI Market Analysis</h4>
+                        <p className="text-xs text-gray-600 mt-1">Processing earnings call sentiment...</p>
+                        <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
+                          <div className="h-full bg-emerald-500 rounded-full w-3/4 animate-pulse"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Strategy Card */}
+                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-float" style={{ animationDelay: "0.5s" }}>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <BarChart3 className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900 text-sm">Strategy Generated</h4>
+                        <p className="text-xs text-gray-600 mt-1">&quot;If CPI &lt; 3%, long SPY, short TLT&quot;</p>
+                        <div className="flex gap-2 mt-2">
+                          <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">+12.4%</span>
+                          <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">Backtested</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Execution Card */}
+                  <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-float" style={{ animationDelay: "1s" }}>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <Zap className="h-4 w-4 text-purple-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900 text-sm">Auto-Execute</h4>
+                        <p className="text-xs text-gray-600 mt-1">Ready to deploy to live trading</p>
+                        <button className="mt-2 px-3 py-1 bg-emerald-600 text-white rounded-md text-xs hover:bg-emerald-700 transition-colors">
+                          Deploy Strategy
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Stats */}
+                <div className="mt-6 pt-4 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-lg font-bold text-gray-900">15+</div>
+                    <div className="text-xs text-gray-600">Data Sources</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-emerald-600">98%</div>
+                    <div className="text-xs text-gray-600">Accuracy</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-gray-900">24/7</div>
+                    <div className="text-xs text-gray-600">Monitoring</div>
                   </div>
                 </div>
               </div>
-
-              {/* Enhanced data streams */}
-              <div className="absolute top-[15%] left-[8%] p-3 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-emerald-100 animate-float">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-emerald-600" />
-                  <span className="text-sm font-medium text-gray-700">Earnings Call Data</span>
-                </div>
-              </div>
-              
-              <div 
-                className="absolute top-[25%] right-[12%] p-3 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-blue-100 animate-float"
-                style={{ animationDelay: "0.7s" }}
-              >
-                <div className="flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4 text-blue-600" />
-                  <span className="text-sm font-medium text-gray-700">Market Sentiment</span>
-                </div>
-              </div>
-              
-              <div 
-                className="absolute bottom-[25%] left-[15%] p-3 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-purple-100 animate-float"
-                style={{ animationDelay: "1.4s" }}
-              >
-                <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-purple-600" />
-                  <span className="text-sm font-medium text-gray-700">Macro Events</span>
-                </div>
-              </div>
-              
-              <div 
-                className="absolute bottom-[15%] right-[8%] p-3 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-orange-100 animate-float"
-                style={{ animationDelay: "2.1s" }}
-              >
-                <div className="flex items-center gap-2">
-                  <Brain className="h-4 w-4 text-orange-600" />
-                  <span className="text-sm font-medium text-gray-700">AI Analysis</span>
-                </div>
-              </div>
-
-              {/* Connection lines */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                <defs>
-                  <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="rgb(16, 185, 129)" stopOpacity="0.1" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Animated connection lines */}
-                <line x1="20%" y1="20%" x2="50%" y2="50%" stroke="url(#lineGradient)" strokeWidth="2" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;10" dur="2s" repeatCount="indefinite" />
-                </line>
-                <line x1="80%" y1="30%" x2="50%" y2="50%" stroke="url(#lineGradient)" strokeWidth="2" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;10" dur="2.5s" repeatCount="indefinite" />
-                </line>
-                <line x1="25%" y1="75%" x2="50%" y2="50%" stroke="url(#lineGradient)" strokeWidth="2" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;10" dur="3s" repeatCount="indefinite" />
-                </line>
-                <line x1="80%" y1="80%" x2="50%" y2="50%" stroke="url(#lineGradient)" strokeWidth="2" strokeDasharray="5,5">
-                  <animate attributeName="stroke-dashoffset" values="0;10" dur="2.2s" repeatCount="indefinite" />
-                </line>
-              </svg>
             </div>
           </div>
         </div>
