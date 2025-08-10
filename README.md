@@ -10,7 +10,7 @@ Mercato is a comprehensive no-code trading platform designed to democratize soph
 
 This repository contains both the frontend and backend components:
 
-- **Frontend (`mercatoFrontend/`)**: Next.js 14 application with TypeScript, Tailwind CSS, and shadcn/ui components
+- **Frontend (`MercatoFrontend/`)**: Next.js 14 application with TypeScript, Tailwind CSS, and shadcn/ui components
 - **Backend (`MercatoBackend/`)**: Node.js/Express API with TypeScript, Prisma ORM, Redis caching, and Firebase authentication
 
 ## ✨ Key Features
@@ -56,7 +56,7 @@ This repository contains both the frontend and backend components:
 ## 📁 Project Structure
 
 ```
-├── mercatoFrontend/          # Next.js frontend application
+├── MercatoFrontend/          # Next.js frontend application
 │   ├── app/                 # App router pages and layouts
 │   ├── components/          # Reusable React components
 │   │   ├── ui/             # Base UI components (shadcn/ui)
@@ -115,7 +115,7 @@ This repository contains both the frontend and backend components:
 
 1. Navigate to the frontend directory:
    ```bash
-   cd mercatoFrontend
+   cd MercatoFrontend
    ```
 
 2. Install dependencies:
