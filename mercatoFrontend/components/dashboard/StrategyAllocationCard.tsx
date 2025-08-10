@@ -33,7 +33,10 @@ export const StrategyAllocationCard: React.FC = () => {
         fetchAllocationSummary();
     }, []);
 
-    const formatCurrency = (value: number) => {
+    const formatCurrency = (value: number | undefined | null) => {
+        if (value === undefined || value === null || isNaN(value)) {
+            return "$0.00";
+        }
         return value.toLocaleString("en-US", {
             style: "currency",
             currency: "USD",

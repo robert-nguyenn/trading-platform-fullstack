@@ -30,12 +30,14 @@ import strategyRoutes from './routes/strategyRoutes/strategyRoutes';
 import userRoutes from './routes/userRoutes/userRoutes';
 import fredRouter, { fredApiRoutes } from './routes/fredRoutes/fredRoutes'; // Import named export too
 import polymarketRoutes from './routes/polymarketRoutes/polymarketRoutes';
+import mockDataRoutes from './routes/mockDataRoutes';
+import mockStrategyRoutes from './routes/mockStrategyRoutes';
 
 // --- API Routes ---
 app.use('/api/accounts', accountsRoutes);
-app.use('/api/trading', tradingRoutes);
+app.use('/api/trading', mockDataRoutes); // Use mock data for demo
 app.use('/api', marketDataRoutes); // Base path for market data
-app.use('/api/strategies', strategyRoutes);
+app.use('/api/strategies', mockStrategyRoutes); // Use mock strategy data for demo
 app.use('/api', userRoutes); // Base path for user routes
 app.use('/api/fred', fredRouter);
 app.use('/api/polymarket', polymarketRoutes); // Base path for Polymarket API
