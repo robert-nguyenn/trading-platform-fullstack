@@ -54,12 +54,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Comprehensive drag-and-drop visual strategy builder with real-time validation*
 
 **Advanced no-code strategy creation:**
-- 🎯 **Visual Flow Builder**: Intuitive drag-and-drop interface using ReactFlow
-- 📈 **Technical Indicators**: 50+ built-in indicators (SMA, EMA, RSI, MACD, Bollinger Bands)
-- ⚡ **Real-time Validation**: Instant strategy verification and error detection
-- 🔄 **Event-Driven Logic**: Complex conditional triggers and market event responses
-- � **Asset Management**: Multi-asset portfolio allocation and rebalancing
-- 🎨 **Custom Blocks**: Extensible architecture for custom trading logic
+- **Visual Flow Builder**: Intuitive drag-and-drop interface using ReactFlow
+- **Technical Indicators**: 50+ built-in indicators (SMA, EMA, RSI, MACD, Bollinger Bands)
+- **Real-time Validation**: Instant strategy verification and error detection
+- **Event-Driven Logic**: Complex conditional triggers and market event responses
+- **Asset Management**: Multi-asset portfolio allocation and rebalancing
+- **Custom Blocks**: Extensible architecture for custom trading logic
 
 **Strategy Components:**
 - **Condition Blocks**: Market triggers, price movements, indicator crossovers
@@ -75,12 +75,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Comprehensive market data integration with advanced analysis tools*
 
 **Comprehensive market coverage:**
-- 📊 **Multi-Source Integration**: Alpaca Markets, FRED Economic Data, Polymarket
-- ⚡ **WebSocket Streaming**: Real-time price feeds and market events
-- 📈 **Advanced Charting**: Interactive charts with 50+ technical indicators
-- 🌍 **Global Markets**: Stocks, ETFs, crypto, forex, and prediction markets
-- ⏰ **Historical Data**: Years of OHLCV data for backtesting
-- 🚨 **Market Alerts**: Custom price and volume-based notifications
+- **Multi-Source Integration**: Alpaca Markets, FRED Economic Data, Polymarket
+- **WebSocket Streaming**: Real-time price feeds and market events
+- **Advanced Charting**: Interactive charts with 50+ technical indicators
+- **Global Markets**: Stocks, ETFs, crypto, forex, and prediction markets
+- **Historical Data**: Years of OHLCV data for backtesting
+- **Market Alerts**: Custom price and volume-based notifications
 
 **Data Sources:**
 - **Alpaca Markets**: US equities and crypto real-time data
@@ -99,12 +99,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Professional portfolio management with comprehensive analytics and theme support*
 
 **Professional portfolio management:**
-- 💰 **Real-time P&L**: Live profit/loss tracking with detailed breakdowns
-- 📊 **Performance Analytics**: Sharpe ratio, max drawdown, alpha/beta calculations
-- 🎯 **Risk Management**: Position sizing, exposure limits, correlation analysis
-- � **Holdings Visualization**: Interactive portfolio composition charts
-- 📱 **Mobile Responsive**: Full functionality across all devices
-- � **Auto-rebalancing**: Scheduled portfolio optimization
+- **Real-time P&L**: Live profit/loss tracking with detailed breakdowns
+- **Performance Analytics**: Sharpe ratio, max drawdown, alpha/beta calculations
+- **Risk Management**: Position sizing, exposure limits, correlation analysis
+- **Holdings Visualization**: Interactive portfolio composition charts
+- **Mobile Responsive**: Full functionality across all devices
+- **Auto-rebalancing**: Scheduled portfolio optimization
 
 ## 🔄 Trading Automation
 
@@ -114,14 +114,14 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Automated strategy execution with comprehensive position management*
 
 **Institutional-grade execution:**
-- 🤖 **Strategy Automation**: Fully automated strategy deployment with Redis-based job queuing
-- ⚡ **Low Latency**: Optimized execution engine with sub-second evaluation cycles
-- 🛡️ **Risk Controls**: Advanced risk management with position sizing, stop-loss, and exposure limits
-- 📊 **Execution Analytics**: Comprehensive tracking of fill rates, slippage analysis, and timing metrics
-- 🔄 **Paper Trading**: Risk-free strategy testing environment with realistic market simulation
-- 📱 **Real-time Alerts**: Instant notifications via WebSocket connections and mobile push
-- 💰 **Cost Optimization**: Intelligent order routing to minimize transaction costs
-- 🎯 **Performance Monitoring**: Real-time strategy performance tracking with advanced metrics
+- **Strategy Automation**: Fully automated strategy deployment with Redis-based job queuing
+- **Low Latency**: Optimized execution engine with sub-second evaluation cycles
+- **Risk Controls**: Advanced risk management with position sizing, stop-loss, and exposure limits
+- **Execution Analytics**: Comprehensive tracking of fill rates, slippage analysis, and timing metrics
+- **Paper Trading**: Risk-free strategy testing environment with realistic market simulation
+- **Real-time Alerts**: Instant notifications via WebSocket connections and mobile push
+- **Cost Optimization**: Intelligent order routing to minimize transaction costs
+- **Performance Monitoring**: Real-time strategy performance tracking with advanced metrics
 
 ## 📱 User Experience
 
@@ -132,12 +132,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Modern, responsive design with seamless light/dark theme transitions*
 
 **Cutting-edge user interface:**
-- 🎨 **Modern Design**: Clean, professional interface built with Tailwind CSS
-- 🌙 **Theme Support**: Elegant dark/light mode switching
-- 📱 **Mobile First**: Responsive design optimized for all screen sizes
-- ⚡ **Performance**: Optimized loading with lazy loading and caching
-- 🎯 **Accessibility**: WCAG compliant with keyboard navigation
-- 🔍 **Advanced Search**: Smart asset discovery and filtering
+- **Modern Design**: Clean, professional interface built with Tailwind CSS
+- **Theme Support**: Elegant dark/light mode switching
+- **Mobile First**: Responsive design optimized for all screen sizes
+- **Performance**: Optimized loading with lazy loading and caching
+- **Accessibility**: WCAG compliant with keyboard navigation
+- **Advanced Search**: Smart asset discovery and filtering
 
 ## 💾 Database Architecture
 
@@ -252,12 +252,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 ```
 
 **Robust data architecture:**
-- 🗄️ **PostgreSQL**: ACID-compliant relational database
-- 🔄 **Prisma ORM**: Type-safe database operations with automated migrations
-- ⚡ **Redis Caching**: High-performance caching for market data
-- 📊 **Real-time Sync**: Live data synchronization across users
-- � **Data Security**: Encrypted sensitive data with audit trails
-- 📈 **Scalability**: Optimized queries and indexing for high performance
+- **PostgreSQL**: ACID-compliant relational database
+- **Prisma ORM**: Type-safe database operations with automated migrations
+- **Redis Caching**: High-performance caching for market data
+- **Real-time Sync**: Live data synchronization across users
+- **Data Security**: Encrypted sensitive data with audit trails
+- **Scalability**: Optimized queries and indexing for high performance
 
 **Key Tables:**
 - **Strategies**: User-created trading strategies with versioning
