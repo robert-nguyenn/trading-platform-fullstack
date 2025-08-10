@@ -37,6 +37,8 @@
 
 The platform combines a sleek React/Next.js frontend with a robust Node.js backend, featuring real-time market data integration, advanced portfolio management, and automated strategy execution. Designed for scalability and performance, Mercato represents the intersection of cutting-edge fintech and user-centric design.
 
+> **📱 Theme Note**: Screenshots showcase both dark and light modes to demonstrate the platform's comprehensive theming system.
+
 ## 🔐 Authentication & Security
 
 ![Sign Up](./screenshots/signup.png)
