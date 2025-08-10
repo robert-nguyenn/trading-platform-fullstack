@@ -296,31 +296,31 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 ## ⚡ Performance Metrics
 
 **Real-time Capabilities:**
-- ⚡ **WebSocket Latency**: < 100ms message delivery
-- � **Market Data Updates**: Live price feeds every 100ms
-- � **Strategy Evaluation**: Complete assessment in < 1 second
-- � **Portfolio Updates**: Real-time P&L calculations
+- **WebSocket Latency**: < 100ms message delivery
+- **Market Data Updates**: Live price feeds every 100ms
+- **Strategy Evaluation**: Complete assessment in < 1 second
+- **Portfolio Updates**: Real-time P&L calculations
 
 **Technical Excellence:**
-- 📱 **Lighthouse Score**: 90+ across performance categories
-- 🧪 **Type Safety**: 100% TypeScript coverage
-- 🔒 **Security**: Firebase authentication with JWT tokens
-- � **Monitoring**: Comprehensive error tracking and logging
+- **Lighthouse Score**: 90+ across performance categories
+- **Type Safety**: 100% TypeScript coverage
+- **Security**: Firebase authentication with JWT tokens
+- **Monitoring**: Comprehensive error tracking and logging
 
 **Business Impact:**
-- 💼 **No-Code Solution**: Democratizing algorithmic trading for retail investors without programming
-- 📊 **Data Integration**: Unified platform for multiple market data sources (Alpaca, FRED, Polymarket)
-- 🎯 **User Experience**: Intuitive drag-and-drop strategy creation with professional-grade tools
-- 🚀 **Scalability**: Cloud-native architecture supporting thousands of concurrent strategies
-- 💰 **Cost Efficiency**: Intelligent caching reduces API costs by 75% while maintaining data freshness
-- 📈 **Performance Analytics**: Advanced portfolio metrics including Sharpe ratio, VaR, and drawdown analysis
+- **No-Code Solution**: Democratizing algorithmic trading for retail investors without programming
+- **Data Integration**: Unified platform for multiple market data sources (Alpaca, FRED, Polymarket)
+- **User Experience**: Intuitive drag-and-drop strategy creation with professional-grade tools
+- **Scalability**: Cloud-native architecture supporting thousands of concurrent strategies
+- **Cost Efficiency**: Intelligent caching reduces API costs by 75% while maintaining data freshness
+- **Performance Analytics**: Advanced portfolio metrics including Sharpe ratio, VaR, and drawdown analysis
 
 **Innovation Highlights:**
-- 🤖 **AI-Ready**: Extensible architecture prepared for machine learning integration
-- 🌍 **Multi-Asset**: Supports stocks, ETFs, crypto, forex, and prediction markets
-- ⚡ **Low Latency**: Optimized execution engine with sub-second strategy evaluation
-- 🛡️ **Risk Management**: Built-in position sizing, stop-loss, and exposure management
-- 📊 **Advanced Analytics**: Real-time P&L tracking with institutional-grade metrics
+- **AI-Ready**: Extensible architecture prepared for machine learning integration
+- **Multi-Asset**: Supports stocks, ETFs, crypto, forex, and prediction markets
+- **Low Latency**: Optimized execution engine with sub-second strategy evaluation
+- **Risk Management**: Built-in position sizing, stop-loss, and exposure management
+- **Advanced Analytics**: Real-time P&L tracking with institutional-grade metrics
 
 ## 🚀 Getting Started
 
