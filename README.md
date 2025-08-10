@@ -103,8 +103,6 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 ![Dashboard - Dark Mode](./screenshots/dashboard-dark.png)
 ![Portfolio Performance - Light Mode](./screenshots/portfolio-performance.png)
 ![Portfolio Performance - Dark Mode](./screenshots/portfolio-performance-dark.png)
-![Current Holdings - Light Mode](./screenshots/holdings-light.png)
-![Current Holdings - Dark Mode](./screenshots/holdings-dark.png)
 
 
 *Professional portfolio management with comprehensive analytics and theme support*
@@ -119,9 +117,10 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 🔄 Trading Automation
 
-![Trading Execution](./screenshots/trading-automation.png)
+![Current Holdings Light](./screenshots/holdings-light.png)
+![Current Holdings Dark](./screenshots/holdings-dark.png)
 
-*Automated strategy execution with risk management*
+*Automated strategy execution with comprehensive position management*
 
 **Institutional-grade execution:**
 - 🤖 **Strategy Automation**: Fully automated strategy deployment
@@ -149,9 +148,47 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 💾 Database Architecture
 
-![Database Schema](./screenshots/database-schema.png)
+*Scalable PostgreSQL schema optimized for trading strategy management*
 
-*Scalable PostgreSQL schema with optimized performance*
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│      User       │    │    Strategy      │    │ StrategyBlock   │
+├─────────────────┤    ├──────────────────┤    ├─────────────────┤
+│ id (String)     │◄──┤│ id (String)      │◄──┤│ id (String)     │
+│ email (String)  │    │ userId (String)  │    │ strategyId      │
+│ tradingId       │    │ name (String)    │    │ blockType (Enum)│
+│ createdAt       │    │ description      │    │ parameters (JSON)│
+│ updatedAt       │    │ isActive (Bool)  │    │ parentId        │
+└─────────────────┘    │ allocatedAmount  │    │ conditionId     │
+                       │ rootBlockId      │    │ actionId        │
+                       │ createdAt        │    │ order (Int)     │
+                       │ updatedAt        │    │ createdAt       │
+                       └──────────────────┘    │ updatedAt       │
+                                               └─────────────────┘
+                                                       │
+                              ┌─────────────────┐     │     ┌─────────────────┐
+                              │   Condition     │◄────┘     │     Action      │
+                              ├─────────────────┤           ├─────────────────┤
+                              │ id (String)     │           │ id (String)     │
+                              │ indicatorType   │           │ actionType (Enum)│
+                              │ dataSource      │           │ parameters (JSON)│
+                              │ symbol (String) │           │ order (Int)     │
+                              │ operator (Enum) │           │ createdAt       │
+                              │ targetValue     │           │ updatedAt       │
+                              │ parameters(JSON)│           └─────────────────┘
+                              │ createdAt       │
+                              │ updatedAt       │           ┌─────────────────┐
+                              └─────────────────┘           │PolymarketEvent  │
+                                                           ├─────────────────┤
+                                                           │ id (Int)        │
+                                                           │ ticker (String) │
+                                                           │ question        │
+                                                           │ volume (Float)  │
+                                                           │ liquidity       │
+                                                           │ tags (JSON)     │
+                                                           │ rawData (JSON)  │
+                                                           └─────────────────┘
+```
 
 **Robust data architecture:**
 - 🗄️ **PostgreSQL**: ACID-compliant relational database
