@@ -5,7 +5,26 @@
 - [About The Project](#about-the-project)
 - [🔐 Authentication & Security](#-authentication--security)
 - [📊 Strategy Builder](#-strategy-builder)
-- [📈 Real-Time Market Data](#-real-time-market-data)
+- [📈 Real-Time Market Data](#-rea**Frontend Technologies:**
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="20" height="20" /> **Next.js 15.2** - React framework with App Router
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" /> **TypeScript 5.0+** - Type-safe development 
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" width="20" height="20" /> **Tailwind CSS** - Utility-first CSS framework
+- <img src="https://avatars.githubusercontent.com/u/75042455?s=48&v=4" width="20" height="20" /> **Radix UI** - Accessible component library
+- <img src="https://recharts.org/statics/logo.svg" width="20" height="20" /> **Recharts** - Data visualization library
+- <img src="https://reactflow.dev/img/logo.svg" width="20" height="20" /> **ReactFlow** - Node-based strategy builder
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" height="20" /> **Framer Motion** - Animation library
+- <img src="https://swr.vercel.app/logo.svg" width="20" height="20" /> **SWR** - Data fetching and caching
+
+**Backend Technologies:**
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="20" height="20" /> **Node.js 18+** - JavaScript runtime
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" width="20" height="20" /> **Express.js** - Web application framework
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" /> **TypeScript** - Type-safe backend development
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" /> **PostgreSQL 15+** - Relational database
+- <img src="https://avatars.githubusercontent.com/u/17219288?s=48&v=4" width="20" height="20" /> **Prisma ORM** - Type-safe database client
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" width="20" height="20" /> **Redis 7+** - In-memory caching and messaging
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" width="20" height="20" /> **Firebase Auth** - Authentication service
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="20" height="20" /> **Docker** - Containerization
+- <img src="https://docs.bullmq.io/img/logo.svg" width="20" height="20" /> **BullMQ** - Job queue processing
 - [🏠 Dashboard & Portfolio](#-dashboard--portfolio)
 - [🔄 Trading Automation](#-trading-automation)
 - [📱 User Experience](#-user-experience)
@@ -263,30 +282,30 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 ## 🛠️ Tech Stack
 
 **Frontend Technologies:**
-- 🚀 **Next.js 15.2** - React framework with App Router
-- 📘 **TypeScript 5.0+** - Type-safe development 
+- ⚛️ **Next.js 15.2** - React framework with App Router
+- � **TypeScript 5.0+** - Type-safe development 
 - 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 🧩 **Radix UI** - Accessible component library
+- ⚫ **Radix UI** - Accessible component library
 - 📊 **Recharts** - Data visualization library
 - 🔥 **ReactFlow** - Node-based strategy builder
 - 🌐 **Framer Motion** - Animation library
 - ⚡ **SWR** - Data fetching and caching
 
 **Backend Technologies:**
-- ⚡ **Node.js 18+** - JavaScript runtime
-- 🚀 **Express.js** - Web application framework
-- 📘 **TypeScript** - Type-safe backend development
-- 🗄️ **PostgreSQL 15+** - Relational database
-- 🔄 **Prisma ORM** - Type-safe database client
-- ⚡ **Redis 7+** - In-memory caching and messaging
+- 🟢 **Node.js 18+** - JavaScript runtime
+- ⚫ **Express.js** - Web application framework
+- � **TypeScript** - Type-safe backend development
+- � **PostgreSQL 15+** - Relational database
+- ⚫ **Prisma ORM** - Type-safe database client
+- 🔴 **Redis 7+** - In-memory caching and messaging
 - 🔥 **Firebase Auth** - Authentication service
 - 🐳 **Docker** - Containerization
-- 📊 **BullMQ** - Job queue processing
+- � **BullMQ** - Job queue processing
 
 **External Integrations:**
-- 📈 **Alpaca Markets API** - Real-time market data & trading
-- 📊 **FRED Economic Data** - Economic indicators
-- 🎯 **Polymarket API** - Prediction market data
+- <img src="https://avatars.githubusercontent.com/u/25738006?s=48&v=4" width="20" height="20" /> **Alpaca Markets API** - Real-time market data & trading
+- <img src="https://research.stlouisfed.org/useraccount/images/fred-logo.png" width="20" height="20" /> **FRED Economic Data** - Economic indicators
+- <img src="https://polymarket.com/logo.svg" width="20" height="20" /> **Polymarket API** - Prediction market data
 
 ## ⚡ Performance Metrics
 
