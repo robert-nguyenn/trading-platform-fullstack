@@ -101,8 +101,11 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ![Dashboard - Light Mode](./screenshots/dashboard-light.png)
 ![Dashboard - Dark Mode](./screenshots/dashboard-dark.png)
-![Portfolio Performance](./screenshots/portfolio-performance.png)
-![Current Holdings](./screenshots/holdings-light.png)
+![Portfolio Performance - Light Mode](./screenshots/portfolio-performance.png)
+![Portfolio Performance - Dark Mode](./screenshots/portfolio-performance-dark.png)
+![Current Holdings - Light Mode](./screenshots/holdings-light.png)
+![Current Holdings - Dark Mode](./screenshots/holdings-dark.png)
+
 
 *Professional portfolio management with comprehensive analytics and theme support*
 
