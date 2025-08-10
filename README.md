@@ -181,91 +181,111 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 *Scalable PostgreSQL schema optimized for algorithmic trading and real-time strategy execution*
 
 ```
-                    ┌─────────────────────────────────────────┐
-                    │            MERCATO DATABASE             │
-                    │        PostgreSQL + Redis Cache        │
-                    └─────────────────────────────────────────┘
-                                        │
-                ┌───────────────────────┼───────────────────────┐
-                │                       │                       │
-                ▼                       ▼                       ▼
+                      ┌─────────────────────────────────────────┐
+                      │            MERCATO DATABASE             │
+                      │        PostgreSQL + Redis Cache        │
+                      └─────────────────────────────────────────┘
+                                          │
+                  ┌───────────────────────┼───────────────────────┐
+                  │                       │                       │
+                  ▼                       ▼                       ▼
 
-┌─────────────────┐ 1:N  ┌──────────────────┐ 1:N  ┌─────────────────┐
-│      User       │─────▶│    Strategy      │─────▶│ StrategyBlock   │
-├─────────────────┤      ├──────────────────┤      ├─────────────────┤
-│ id (UUID)       │      │ id (UUID)        │      │ id (UUID)       │
-│ email (String)  │      │ userId (UUID) FK │      │ strategyId FK   │
-│ tradingId (FK)  │      │ name (String)    │      │ blockType (Enum)│
-│ createdAt       │      │ description      │      │ parameters(JSON)│
-│ updatedAt       │      │ isActive (Bool)  │      │ parentId (FK)   │
-└─────────────────┘      │ allocatedAmount  │      │ conditionId (FK)│
-                         │ rootBlockId (FK) │      │ actionId (FK)   │
-                         │ createdAt        │      │ order (Int)     │
-                         │ updatedAt        │      │ createdAt       │
-                         └──────────────────┘      │ updatedAt       │
-                                   │              └─────────────────┘
-                                   │                       │
-                                   │           ┌───────────┼───────────┐
-                                   │           │                       │
-                                   │           ▼                       ▼
-                                   │  ┌─────────────────┐    ┌─────────────────┐
-                                   │  │   Condition     │    │     Action      │
-                                   │  ├─────────────────┤    ├─────────────────┤
-                                   │  │ id (UUID)       │    │ id (UUID)       │
-                                   │  │ indicatorType   │    │ actionType(Enum)│
-                                   │  │ dataSource      │    │ parameters(JSON)│
-                                   │  │ dataKey         │    │ order (Int)     │
-                                   │  │ symbol (String) │    │ createdAt       │
-                                   │  │ interval        │    │ updatedAt       │
-                                   │  │ parameters(JSON)│    └─────────────────┘
-                                   │  │ operator (Enum) │
-                                   │  │ targetValue     │    
-                                   │  │ targetIndId(FK) │    ┌─────────────────┐
-                                   │  │ createdAt       │    │PolymarketEvent  │
-                                   │  │ updatedAt       │    ├─────────────────┤
-                                   │  └─────────────────┘    │ id (Int) PK     │
-                                   │                         │ ticker (String) │
-                                   │                         │ slug (String)   │
-                                   └────────────────────────▶│ question        │
-                                                            │ description     │
-┌─────────────────────────────────────────────────────────┐│ image (String)  │
-│                 ENUMS & TYPES                           ││ active (Bool)   │
-├─────────────────────────────────────────────────────────┤│ closed (Bool)   │
-│                                                         ││ startDate       │
-│ StrategyBlockType:                                      ││ endDate         │
-│ • ROOT      • WEIGHT    • ASSET                         ││ volume (Float)  │
-│ • GROUP     • CONDITION_IF • FILTER • ACTION            ││ liquidity       │
-│                                                         ││ tags (JSON)     │
-│ Operator:                                               ││ rawData (JSON)  │
-│ • EQUALS           • NOT_EQUALS                         ││ fetchedAt       │
-│ • GREATER_THAN     • LESS_THAN                          │└─────────────────┘
-│ • GREATER_THAN_OR_EQUAL • LESS_THAN_OR_EQUAL            │
-│ • CROSSES_ABOVE    • CROSSES_BELOW                      │
-│                                                         │
-│ ActionType:                                             │
-│ • BUY    • SELL    • NOTIFY                             │
-│ • REBALANCE        • LOG_MESSAGE                        │
-└─────────────────────────────────────────────────────────┘
+  ┌─────────────────┐ 1:N  ┌──────────────────┐ 1:N  ┌─────────────────┐
+  │      User       │─────▶│    Strategy      │─────▶│ StrategyBlock   │
+  ├─────────────────┤      ├──────────────────┤      ├─────────────────┤
+  │ id (UUID)       │      │ id (UUID)        │      │ id (UUID)       │
+  │ email (String)  │      │ userId (UUID) FK │      │ strategyId FK   │
+  │ tradingId (FK)  │      │ name (String)    │      │ blockType (Enum)│
+  │ createdAt       │      │ description      │      │ parameters(JSON)│
+  │ updatedAt       │      │ isActive (Bool)  │      │ parentId (FK)   │
+  └─────────────────┘      │ allocatedAmount  │      │ conditionId (FK)│
+                           │ rootBlockId (FK) │      │ actionId (FK)   │
+                           │ createdAt        │      │ order (Int)     │
+                           │ updatedAt        │      │ createdAt       │
+                           └──────────────────┘      │ updatedAt       │
+                                     │              └─────────────────┘
+                                     │                       │
+                                     │           ┌───────────┼───────────┐
+                                     │           │                       │
+                                     │           ▼                       ▼
+                                     │  ┌─────────────────┐    ┌─────────────────┐
+                                     │  │   Condition     │    │     Action      │
+                                     │  ├─────────────────┤    ├─────────────────┤
+                                     │  │ id (UUID)       │    │ id (UUID)       │
+                                     │  │ indicatorType   │    │ actionType(Enum)│
+                                     │  │ dataSource      │    │ parameters(JSON)│
+                                     │  │ dataKey         │    │ order (Int)     │
+                                     │  │ symbol (String) │    │ createdAt       │
+                                     │  │ interval        │    │ updatedAt       │
+                                     │  │ parameters(JSON)│    └─────────────────┘
+                                     │  │ operator (Enum) │
+                                     │  │ targetValue     │    
+                                     │  │ targetIndId(FK) │    
+                                     │  │ createdAt       │    
+                                     │  │ updatedAt       │    
+                                     │  └─────────────────┘    
+                                     │                         
+                                     └─────────────────────────┐
+                                                               │
+                                                               ▼
+                                                    ┌─────────────────┐
+                                                    │PolymarketEvent  │
+                                                    ├─────────────────┤
+                                                    │ id (Int) PK     │
+                                                    │ ticker (String) │
+                                                    │ slug (String)   │
+                                                    │ question        │
+                                                    │ description     │
+                                                    │ image (String)  │
+                                                    │ active (Bool)   │
+                                                    │ closed (Bool)   │
+                                                    │ startDate       │
+                                                    │ endDate         │
+                                                    │ volume (Float)  │
+                                                    │ liquidity       │
+                                                    │ tags (JSON)     │
+                                                    │ rawData (JSON)  │
+                                                    │ fetchedAt       │
+                                                    └─────────────────┘
 
-┌─────────────────────────────────────────────────────────┐
-│                  REDIS ARCHITECTURE                     │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│ Stream: "indicatorUpdates"                              │
-│ └── Real-time technical indicator data distribution     │
-│                                                         │
-│ Stream: "actionRequired"                                │
-│ └── Strategy execution triggers and alerts              │
-│                                                         │
-│ Cache: Technical Indicators                             │
-│ └── SMA, EMA, RSI, MACD, Bollinger Bands (TTL-based)   │
-│                                                         │
-│ Cache: Market Data                                      │
-│ └── Real-time price feeds and volume data               │
-│                                                         │
-│ Job Queue: Background Processing                        │
-│ └── Strategy evaluation, risk calculations, alerts      │
-└─────────────────────────────────────────────────────────┘
+  ┌─────────────────────────────────────────────────────────┐
+  │                 ENUMS & TYPES                           │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │ StrategyBlockType:                                      │
+  │ • ROOT      • WEIGHT    • ASSET                         │
+  │ • GROUP     • CONDITION_IF • FILTER • ACTION            │
+  │                                                         │
+  │ Operator:                                               │
+  │ • EQUALS           • NOT_EQUALS                         │
+  │ • GREATER_THAN     • LESS_THAN                          │
+  │ • GREATER_THAN_OR_EQUAL • LESS_THAN_OR_EQUAL            │
+  │ • CROSSES_ABOVE    • CROSSES_BELOW                      │
+  │                                                         │
+  │ ActionType:                                             │
+  │ • BUY    • SELL    • NOTIFY                             │
+  │ • REBALANCE        • LOG_MESSAGE                        │
+  └─────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────┐
+  │                  REDIS ARCHITECTURE                     │
+  ├─────────────────────────────────────────────────────────┤
+  │                                                         │
+  │ Stream: "indicatorUpdates"                              │
+  │ └── Real-time technical indicator data distribution     │
+  │                                                         │
+  │ Stream: "actionRequired"                                │
+  │ └── Strategy execution triggers and alerts              │
+  │                                                         │
+  │ Cache: Technical Indicators                             │
+  │ └── SMA, EMA, RSI, MACD, Bollinger Bands (TTL-based)   │
+  │                                                         │
+  │ Cache: Market Data                                      │
+  │ └── Real-time price feeds and volume data               │
+  │                                                         │
+  │ Job Queue: Background Processing                        │
+  │ └── Strategy evaluation, risk calculations, alerts      │
+  └─────────────────────────────────────────────────────────┘
 ```
 
 **Robust data architecture:**
