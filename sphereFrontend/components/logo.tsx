@@ -27,14 +27,14 @@ export function Logo({ className, size = "md", showText = true }: LogoProps) {
         <div className="relative flex items-center justify-center bg-blue-500 text-white rounded-full p-1">
           <Image 
             src="/logo.png" 
-            alt="Sphere Logo" 
+            alt="Mercato Logo" 
             className={cn(sizeClasses[size])} 
             width={32}
             height={32}
           />
         </div>
       </div>
-      {showText && <span className={cn("font-bold tracking-tight", textSizeClasses[size])}>Sphere</span>}
+      {showText && <span className={cn("font-bold tracking-tight", textSizeClasses[size])}>Mercato</span>}
     </div>
   )
 }

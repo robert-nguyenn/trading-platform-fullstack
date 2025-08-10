@@ -1,17 +1,17 @@
-# Sphere Trading Platform
+# Mercato - Advanced Trading Platform
 
-A comprehensive trading platform that empowers retail investors with hedge fund-like tools to create, automate, and deploy trading strategies without coding expertise.
+A sophisticated full-stack trading platform that empowers retail investors with institutional-grade tools to create, automate, and deploy trading strategies without coding expertise. Built with modern web technologies and real-time market data integration.
 
 ## 🚀 Project Overview
 
-Sphere is a no-code platform designed to democratize sophisticated trading strategies. The platform consists of a modern frontend built with Next.js and a robust backend API built with Node.js, TypeScript, and Prisma.
+Mercato is a comprehensive no-code trading platform designed to democratize sophisticated algorithmic trading strategies. The platform features a modern React-based frontend built with Next.js and a robust backend API built with Node.js, TypeScript, and Prisma ORM for seamless strategy creation and portfolio management.
 
 ## 🏗️ Architecture
 
 This repository contains both the frontend and backend components:
 
-- **Frontend (`sphereFrontend/`)**: Next.js 14 application with TypeScript, Tailwind CSS, and shadcn/ui components
-- **Backend (`SphereBackend/`)**: Node.js/Express API with TypeScript, Prisma ORM, Redis caching, and Firebase authentication
+- **Frontend (`mercatoFrontend/`)**: Next.js 14 application with TypeScript, Tailwind CSS, and shadcn/ui components
+- **Backend (`MercatoBackend/`)**: Node.js/Express API with TypeScript, Prisma ORM, Redis caching, and Firebase authentication
 
 ## ✨ Key Features
 
@@ -56,7 +56,7 @@ This repository contains both the frontend and backend components:
 ## 📁 Project Structure
 
 ```
-├── sphereFrontend/          # Next.js frontend application
+├── mercatoFrontend/          # Next.js frontend application
 │   ├── app/                 # App router pages and layouts
 │   ├── components/          # Reusable React components
 │   │   ├── ui/             # Base UI components (shadcn/ui)
@@ -67,7 +67,7 @@ This repository contains both the frontend and backend components:
 │   ├── hooks/              # Custom React hooks
 │   └── styles/             # Global styles
 │
-└── SphereBackend/          # Node.js backend API
+└── MercatoBackend/          # Node.js backend API
     ├── src/
     │   ├── controllers/    # API route handlers
     │   ├── services/       # Business logic services
@@ -91,7 +91,7 @@ This repository contains both the frontend and backend components:
 
 1. Navigate to the backend directory:
    ```bash
-   cd SphereBackend
+   cd MercatoBackend
    ```
 
 2. Install dependencies:
@@ -115,7 +115,7 @@ This repository contains both the frontend and backend components:
 
 1. Navigate to the frontend directory:
    ```bash
-   cd sphereFrontend
+   cd mercatoFrontend
    ```
 
 2. Install dependencies:
@@ -141,7 +141,7 @@ This repository contains both the frontend and backend components:
 You can also run the entire stack using Docker:
 
 ```bash
-cd SphereBackend
+cd MercatoBackend
 docker-compose up -d
 ```
 
@@ -183,4 +183,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Note**: This repository showcases a comprehensive trading platform built with modern web technologies. The project demonstrates full-stack development skills, real-time data handling, complex state management, and scalable architecture design.
+**Note**: This repository showcases a comprehensive trading platform built with modern web technologies. The project demonstrates full-stack development skills, real-time data handling, complex state management, and scalable architecture design for financial applications.

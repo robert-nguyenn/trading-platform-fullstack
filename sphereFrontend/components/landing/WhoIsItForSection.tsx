@@ -5,9 +5,9 @@ export default function WhoIsItForSection() {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-900">For the Investor With Ideas</h2>
           <p className="mt-6 text-lg text-gray-600">
-            Sphere is designed for students, professionals, and curious traders who want to move beyond passive
+            Mercato is designed for students, professionals, and curious traders who want to move beyond passive
             investing and basic charting. If you follow the markets, have unique insights, and want a systematic way to
-            act on them without coding, Sphere is your platform.
+            act on them without coding, Mercato is your platform.
           </p>
         </div>
 

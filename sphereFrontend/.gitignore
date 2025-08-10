@@ -20,7 +20,7 @@ yarn-error.log*
 .env*
 
 
-/sphere-mvp-auth-firebase-adminsdk-fbsvc-6646548d60.json/
+/mercato-mvp-auth-firebase-adminsdk-fbsvc-*.json/
 # vercel
 .vercel
 

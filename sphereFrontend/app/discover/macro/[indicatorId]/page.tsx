@@ -268,12 +268,12 @@ export async function generateMetadata({ params }: IndicatorPageProps): Promise<
     const metadata = await getIndicatorMetadata(params.indicatorId);
     if (!metadata) {
         return {
-            title: 'Indicator Not Found | Sphere',
+            title: 'Indicator Not Found | Mercato',
             description: 'The requested indicator could not be found.',
         };
     }
     return {
-        title: `${metadata.description} (${metadata.fredSeriesId}) | Sphere Discover`,
+        title: `${metadata.description} (${metadata.fredSeriesId}) | Mercato Discover`,
         description: metadata.description.substring(0, 160),
     };
 }

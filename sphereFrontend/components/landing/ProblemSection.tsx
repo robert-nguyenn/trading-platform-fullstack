@@ -32,7 +32,7 @@ export default function ProblemSection() {
             <div className="h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center mb-6">
               <Brain className="h-8 w-8 text-gray-700" />
             </div>
-            <h3 className="text-xl font-semibold mb-4">The Sphere Way</h3>
+            <h3 className="text-xl font-semibold mb-4">The Mercato Way</h3>
             <p className="text-gray-600">
               AI-powered, no-code platform that translates your market insights into automated trading strategies with
               just a few clicks or simple text prompts.

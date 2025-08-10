@@ -1,4 +1,4 @@
-// sphereFrontend/components/dashboard/PortfolioSummaryCards.tsx
+// mercatoFrontend/components/dashboard/PortfolioSummaryCards.tsx
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { TrendingUp, TrendingDown, Activity, ChevronRight, Target, DollarSign, BarChart3 } from 'lucide-react';

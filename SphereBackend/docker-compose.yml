@@ -10,7 +10,7 @@ services:
       - NODEMON_LEGACY_WATCH=1
     volumes:
       - ./src:/app/src 
-      - ./sphere-mvp-auth-firebase-adminsdk-fbsvc-6646548d60.json:/app/src/config/firebase-service-account.json
+      - ./mercato-mvp-auth-firebase-adminsdk-fbsvc-*.json:/app/src/config/firebase-service-account.json
    
     depends_on:
       #- db  # App depends on PostgreSQL

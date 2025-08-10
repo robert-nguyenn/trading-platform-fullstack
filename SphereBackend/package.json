@@ -1,7 +1,7 @@
 {
-  "name": "sphere",
+  "name": "mercato-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mercato Trading Platform - Backend API with real-time market data, strategy execution, and portfolio management",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -9,9 +9,19 @@
     "dev": "nodemon --legacy-watch --exec ts-node src/index.ts",
     "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "trading",
+    "fintech",
+    "portfolio-management",
+    "market-data",
+    "alpaca",
+    "real-time",
+    "nodejs",
+    "typescript",
+    "mercato"
+  ],
+  "author": "Robert Nguyen",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "@types/cors": "^2.8.17",

@@ -14,7 +14,7 @@
 
 // export default router;
 
-// sphereBackend/src/routes/polymarketRoutes/polymarketRoutes.ts
+// mercatoBackend/src/routes/polymarketRoutes/polymarketRoutes.ts
 import { Router } from 'express'
 import {
   getPolymarketEventsFromDB,

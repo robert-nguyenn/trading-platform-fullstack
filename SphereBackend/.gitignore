@@ -1,4 +1,4 @@
 node_modules
 dist
 .env
-sphere-mvp-auth-firebase-adminsdk-fbsvc-6646548d60.json
+mercato-mvp-auth-firebase-adminsdk-fbsvc-*.json

@@ -6,10 +6,10 @@ export default function Footers() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="h-8 w-8 rounded-full bg-gray-800"></div>
-              <span className="text-xl font-semibold text-gray-900">Sphere</span>
+              <span className="text-xl font-semibold text-gray-900">Mercato</span>
             </div>
             <p className="text-gray-600">
-              Sphere is a platform that helps you connect with people and share your thoughts.
+              Mercato is an advanced trading platform that empowers investors with institutional-grade tools for strategy building and portfolio management.
             </p>
           </div>
           <div>
@@ -74,7 +74,7 @@ export default function Footers() {
           </div>
         </div>
         <div className="mt-12 text-center text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Sphere. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Mercato. All rights reserved.</p>
         </div>
       </div>
     </footer>

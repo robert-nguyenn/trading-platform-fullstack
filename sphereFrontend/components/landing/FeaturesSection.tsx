@@ -16,7 +16,7 @@ export default function FeaturesSection() {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Sphere brings <span className="text-emerald-600">institutional power</span>, simplified.
+            Mercato brings <span className="text-emerald-600">institutional power</span>, simplified.
           </h2>
           
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -74,7 +74,7 @@ export default function FeaturesSection() {
               </div>
               <p className="text-gray-600 text-lg leading-relaxed">
                 Ask questions in plain English. Instantly summarize earnings calls, analyze market sentiment, understand
-                macro reports, and discover hidden correlations. <span className="font-semibold text-emerald-600">Sphere's AI cuts through the noise.</span>
+                macro reports, and discover hidden correlations. <span className="font-semibold text-emerald-600">Mercato's AI cuts through the noise.</span>
               </p>
             </CardContent>
           </Card>
@@ -124,7 +124,7 @@ export default function FeaturesSection() {
                 <h3 className="text-2xl font-bold text-gray-900">From Insight to Algorithm</h3>
               </div>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Have a thesis? Just describe it. "If Trump wins, short solar ETFs." <span className="font-semibold text-blue-600">Sphere's AI
+                Have a thesis? Just describe it. "If Trump wins, short solar ETFs." <span className="font-semibold text-blue-600">Mercato's AI
                 translates your plain English idea</span> into precise, testable trading logic in seconds.
               </p>
             </CardContent>

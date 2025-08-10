@@ -188,6 +188,6 @@ export default async function DiscoverPage() {
 }
 
 export const metadata = {
-    title: 'Discover Economic Indicators | Sphere',
+    title: 'Discover Economic Indicators | Mercato',
     description: 'Explore comprehensive macroeconomic indicators including GDP, inflation, employment, and market data. Make informed investment decisions with real-time economic insights.',
 };

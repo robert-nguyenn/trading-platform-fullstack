@@ -29,7 +29,7 @@ export default function HeroSection() {
               </h1>
               
               <p className="text-xl text-gray-600 max-w-lg leading-relaxed">
-                Sphere is the intelligent, no-code platform that turns your market insights—from macro events to earnings
+                Mercato is the intelligent, no-code platform that turns your market insights—from macro events to earnings
                 calls—into <span className="font-semibold text-emerald-700">executable trading strategies</span>.
               </p>
             </div>

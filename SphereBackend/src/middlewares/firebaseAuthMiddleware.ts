@@ -1,4 +1,4 @@
-// filepath: c:\Users\Asus\Desktop\Sphere\src\middlewares\firebaseAuthMiddleware.ts
+// filepath: c:\Users\Asus\Desktop\Mercato\src\middlewares\firebaseAuthMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import admin from 'firebase-admin'; // Import admin first
 

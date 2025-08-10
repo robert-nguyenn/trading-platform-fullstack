@@ -16,7 +16,7 @@ export default function Header() {
               <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-emerald-400/20 to-transparent"></div>
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 bg-clip-text text-transparent">
-              Sphere
+              Mercato
             </span>
           </div>
 
