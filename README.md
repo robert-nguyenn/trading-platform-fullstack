@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Mercato Logo](./public/logo.png)
+![Mercato Logo](./screenshots/logo.png)
 
 *Democratizing sophisticated algorithmic trading with cutting-edge technology*
 
