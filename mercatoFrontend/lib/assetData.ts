@@ -34,3 +34,10 @@ export const findAssetBySymbol = (symbol: string | null): DetailedAsset | undefi
 export const getAssetLabel = (asset: DetailedAsset | undefined): string => {
     return asset ? `${asset.symbol} - ${asset.name}` : "Select asset";
 };
+
+// Function to fetch assets (mock implementation for now)
+export const fetchAssets = async (): Promise<DetailedAsset[]> => {
+    // For now, return the mock data
+    // In the future, this could make an API call to your backend
+    return Promise.resolve(MOCK_DETAILED_ASSETS);
+};

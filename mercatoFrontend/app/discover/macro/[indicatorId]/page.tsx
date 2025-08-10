@@ -7,7 +7,7 @@ import IndicatorTimeSeriesChart from '@/components/charts/IndicatorTimeSeriesCha
 // TODO: Import your actual chart component
 // import IndicatorChart from '@/components/charts/IndicatorChart';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
 
 // Helper function to provide detailed descriptions for each indicator (same as in discover page)
 function getIndicatorDescription(fredSeriesId: string): string {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import type { FredEndpointInfo } from '@/lib/types'; // Adjust import path
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
 
 // Helper function to provide detailed descriptions for each indicator
 function getIndicatorDescription(fredSeriesId: string): string {

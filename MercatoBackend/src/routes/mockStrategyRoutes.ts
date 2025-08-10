@@ -112,4 +112,100 @@ router.get('/', (req: Request, res: Response) => {
   ]);
 });
 
+// Mock Create Strategy
+router.post('/', (req: Request, res: Response) => {
+  const { name, description, type, risk_level } = req.body;
+  
+  const newStrategy = {
+    id: `strategy-${Date.now()}`,
+    name: name || "New Strategy",
+    description: description || "A new trading strategy",
+    type: type || "balanced",
+    risk_level: risk_level || "medium",
+    allocation: 0,
+    performance: {
+      total_return: 0,
+      return_percentage: 0,
+      ytd_return: 0,
+      max_drawdown: 0,
+      sharpe_ratio: 0,
+      volatility: 0
+    },
+    holdings: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    status: "active"
+  };
+  
+  res.status(201).json(newStrategy);
+});
+
+// Mock Get Strategy by ID
+router.get('/:strategyId', (req: Request, res: Response) => {
+  const { strategyId } = req.params;
+  
+  // Return a mock strategy based on ID
+  const strategy = {
+    id: strategyId,
+    name: "Tech Growth Strategy",
+    description: "Focuses on high-growth technology stocks with strong fundamentals",
+    type: "growth",
+    risk_level: "high",
+    allocation: 35420.50,
+    performance: {
+      total_return: 2840.25,
+      return_percentage: 8.72,
+      ytd_return: 12.45,
+      max_drawdown: -5.23,
+      sharpe_ratio: 1.34,
+      volatility: 18.67
+    },
+    holdings: [
+      { symbol: "AAPL", allocation: 40, current_price: 188.00 },
+      { symbol: "MSFT", allocation: 35, current_price: 345.00 },
+      { symbol: "NVDA", allocation: 25, current_price: 915.00 }
+    ],
+    created_at: "2024-01-15T10:30:00Z",
+    updated_at: new Date().toISOString(),
+    status: "active"
+  };
+  
+  res.json(strategy);
+});
+
+// Mock Update Strategy
+router.patch('/:strategyId', (req: Request, res: Response) => {
+  const { strategyId } = req.params;
+  const updateData = req.body;
+  
+  const updatedStrategy = {
+    id: strategyId,
+    name: updateData.name || "Updated Strategy",
+    description: updateData.description || "An updated trading strategy",
+    type: updateData.type || "balanced",
+    risk_level: updateData.risk_level || "medium",
+    allocation: updateData.allocation || 0,
+    performance: {
+      total_return: 0,
+      return_percentage: 0,
+      ytd_return: 0,
+      max_drawdown: 0,
+      sharpe_ratio: 0,
+      volatility: 0
+    },
+    holdings: updateData.holdings || [],
+    created_at: "2024-01-15T10:30:00Z",
+    updated_at: new Date().toISOString(),
+    status: updateData.status || "active"
+  };
+  
+  res.json(updatedStrategy);
+});
+
+// Mock Delete Strategy
+router.delete('/:strategyId', (req: Request, res: Response) => {
+  const { strategyId } = req.params;
+  res.status(204).send(); // No content response for successful deletion
+});
+
 export default router;

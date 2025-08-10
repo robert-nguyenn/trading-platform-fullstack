@@ -29,7 +29,7 @@ import tradingRoutes from './routes/brokerRoutes/tradingRoutes';
 import strategyRoutes from './routes/strategyRoutes/strategyRoutes';
 import userRoutes from './routes/userRoutes/userRoutes';
 import fredRouter, { fredApiRoutes } from './routes/fredRoutes/fredRoutes'; // Import named export too
-import polymarketRoutes from './routes/polymarketRoutes/polymarketRoutes';
+import polymarketRoutes from './routes/mockPolymarketRoutes';
 import mockDataRoutes from './routes/mockDataRoutes';
 import mockStrategyRoutes from './routes/mockStrategyRoutes';
 

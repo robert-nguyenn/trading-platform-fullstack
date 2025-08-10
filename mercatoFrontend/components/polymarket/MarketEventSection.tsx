@@ -70,7 +70,7 @@ export default function MarketEventsSection() {
         setLoading(true); // Set loading state
 
         // Fetch data from your backend API endpoint
-        const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/polymarket/stored-events`);
+        const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/api/polymarket/stored-events`);
 
         if (!response.ok) {
           const errorData = await response.json();

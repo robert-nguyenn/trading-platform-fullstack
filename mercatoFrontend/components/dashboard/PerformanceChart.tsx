@@ -329,8 +329,11 @@ export const PerformanceChart = () => {
       }
     }
 
-    fetchData(selectedRange)
-  }, [selectedRange, portfolioData])
+    // Only fetch if we don't already have data for this range
+    if (!portfolioData[selectedRange]) {
+      fetchData(selectedRange)
+    }
+  }, [selectedRange]) // Remove portfolioData from dependencies
 
   // Fetch 1D data on initial load for "Today's Change"
   useEffect(() => {
@@ -344,7 +347,7 @@ export const PerformanceChart = () => {
           console.error("Error fetching 1D data:", err)
         })
     }
-  }, [portfolioData])
+  }, []) // Empty dependency array - only run once on mount
 
   // Select data based on the chosen range
   const chartData = useMemo(() => {
