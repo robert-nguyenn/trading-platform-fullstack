@@ -122,7 +122,7 @@ export const getAccountPortfolioHistory = (
   params: Record<string, any> = {}
 ): Promise<any> =>
   apiClient
-    .get(`trading/user/portfolio/history`, { params })
+    .get(`/trading/user/portfolio/history`, { params })
     .then((res) => res.data);
 
 export default apiClient; // Export the configured instance if needed elsewhere
