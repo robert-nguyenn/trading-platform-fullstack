@@ -50,7 +50,7 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 **Advanced no-code strategy creation:**
 - 🎯 **Visual Flow Builder**: Intuitive drag-and-drop interface using ReactFlow
-- 📈 **Technical Indicators**: 20+ built-in indicators (SMA, EMA, RSI, MACD, Bollinger Bands)
+- 📈 **Technical Indicators**: 50+ built-in indicators (SMA, EMA, RSI, MACD, Bollinger Bands)
 - ⚡ **Real-time Validation**: Instant strategy verification and error detection
 - 🔄 **Event-Driven Logic**: Complex conditional triggers and market event responses
 - � **Asset Management**: Multi-asset portfolio allocation and rebalancing
@@ -72,7 +72,7 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 **Comprehensive market coverage:**
 - 📊 **Multi-Source Integration**: Alpaca Markets, FRED Economic Data, Polymarket
 - ⚡ **WebSocket Streaming**: Real-time price feeds and market events
-- 📈 **Advanced Charting**: Interactive charts with 20+ technical indicators
+- 📈 **Advanced Charting**: Interactive charts with 50+ technical indicators
 - 🌍 **Global Markets**: Stocks, ETFs, crypto, forex, and prediction markets
 - ⏰ **Historical Data**: Years of OHLCV data for backtesting
 - 🚨 **Market Alerts**: Custom price and volume-based notifications
@@ -289,14 +289,6 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 - 🎯 **Polymarket API** - Prediction market data
 
 ## ⚡ Performance Metrics
-
-**System Performance:**
-- 🚀 **API Response Time**: < 100ms average, < 200ms 99th percentile
-- 🔄 **Real-time Latency**: < 50ms WebSocket message delivery
-- 📊 **Database Performance**: < 10ms query execution for 95% of operations
-- 💾 **Cache Hit Rate**: > 95% for frequently accessed market data
-- � **CDN Performance**: < 100ms global asset delivery
-- 📱 **Lighthouse Score**: 95+ across all performance categories
 
 **Real-time Capabilities:**
 - ⚡ **WebSocket Latency**: < 100ms message delivery
