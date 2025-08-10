@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export default function HeroSection() {
   return (
     <section className="w-full bg-gradient-to-b from-white via-gray-50/30 to-white overflow-hidden">
-      <div className="w-full px-6 py-16 md:py-24 max-w-7xl mx-auto">
+      <div className="w-full px-6 py-20 md:py-24 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-8 animate-fade-in">

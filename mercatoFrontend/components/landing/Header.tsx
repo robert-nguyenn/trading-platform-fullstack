@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, TrendingUp } from "lucide-react";
+import { Menu } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   return (
@@ -9,8 +10,14 @@ export default function Header() {
         <nav className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3 group">
-            <div className="relative h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
-              <TrendingUp className="h-5 w-5 text-white" />
+            <div className="relative h-10 w-10 flex items-center justify-center transition-all duration-300">
+              <Image 
+                src="/logo.png" 
+                alt="Mercato Logo" 
+                width={40}
+                height={40}
+                className="object-contain"
+              />
             </div>
             <span className="text-2xl font-bold text-gray-900">
               Mercato

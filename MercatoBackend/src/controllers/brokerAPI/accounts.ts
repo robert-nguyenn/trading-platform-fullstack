@@ -501,6 +501,19 @@ export const fundAccount = async (req: Request, res: Response): Promise<void> =>
 
 export const getAccountBalance = async (req: Request, res: Response): Promise<void> => {
     try {
+        // Development mode bypass - return mock data
+        if (process.env.DEVELOPMENT_MODE === 'true') {
+            res.status(200).json({
+                buying_power: "45850.75",
+                portfolio_value: "102764.00",
+                cash: "22925.75",
+                equity: "102764.00",
+                long_market_value: "79838.25",
+                short_market_value: "0"
+            });
+            return;
+        }
+
         // 1. Get user ID from authenticated user object (populated by middleware)
         const firebaseUser = req.user; // Assuming middleware adds 'user' to Request
         const userId = firebaseUser?.uid;

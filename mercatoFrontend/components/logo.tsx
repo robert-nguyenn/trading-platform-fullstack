@@ -22,17 +22,14 @@ export function Logo({ className, size = "md", showText = true }: LogoProps) {
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className="relative">
-        <div className="absolute -inset-1 bg-gradient-to-tr from-blue-500/30 to-blue-500/10 rounded-full blur-[2px]" />
-        <div className="relative flex items-center justify-center bg-blue-500 text-white rounded-full p-1">
-          <Image 
-            src="/logo.png" 
-            alt="Mercato Logo" 
-            className={cn(sizeClasses[size])} 
-            width={32}
-            height={32}
-          />
-        </div>
+      <div className="relative flex items-center justify-center">
+        <Image 
+          src="/logo.png" 
+          alt="Mercato Logo" 
+          className={cn(sizeClasses[size], "object-contain")} 
+          width={32}
+          height={32}
+        />
       </div>
       {showText && <span className={cn("font-bold tracking-tight", textSizeClasses[size])}>Mercato</span>}
     </div>

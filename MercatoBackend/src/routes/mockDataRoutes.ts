@@ -170,4 +170,32 @@ router.get('/user/account', (req: Request, res: Response) => {
   });
 });
 
+// Mock Account Balance - Add this endpoint for account overview
+router.get('/user/account', (req: Request, res: Response) => {
+  res.json({
+    id: "mock-account-123",
+    account_number: "123456789",
+    status: "ACTIVE",
+    currency: "USD",
+    buying_power: "45850.75",
+    regt_buying_power: "45850.75", 
+    daytrading_buying_power: "91701.50",
+    cash: "22925.75",
+    cash_withdrawable: "22925.75",
+    cash_transferable: "22925.75",
+    portfolio_value: "102764.00",
+    equity: "102764.00",
+    last_equity: "101890.25",
+    multiplier: "2",
+    initial_margin: "0",
+    maintenance_margin: "0",
+    long_market_value: "79838.25",
+    short_market_value: "0",
+    position_market_value: "79838.25",
+    last_maintenance_margin: "0",
+    sma: "0",
+    daytrade_count: "0"
+  });
+});
+
 export default router;

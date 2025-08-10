@@ -1,4 +1,5 @@
-import { TrendingUp, Twitter, Linkedin, Github, Mail } from "lucide-react"
+import { Twitter, Linkedin, Github, Mail } from "lucide-react"
+import Image from "next/image"
 
 export default function Footers() {
   return (
@@ -8,8 +9,14 @@ export default function Footers() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-white" />
+              <div className="h-8 w-8 flex items-center justify-center">
+                <Image 
+                  src="/logo.png" 
+                  alt="Mercato Logo" 
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
               </div>
               <span className="text-xl font-bold text-gray-900">Mercato</span>
             </div>
