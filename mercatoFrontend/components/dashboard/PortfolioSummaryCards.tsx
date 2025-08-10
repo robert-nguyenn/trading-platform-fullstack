@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { getStrategies, getAccountPortfolioHistory } from '@/lib/apiClient';
+import apiClient from '@/lib/apiClient';
 
 interface PortfolioSummaryCardsProps {
   userId: string;
@@ -123,114 +124,44 @@ export const PortfolioSummaryCards = ({
         setLoadingPortfolio(true);
         setPortfolioError(null);
 
-        // Calculate Jan 1 of current year for YTD
-        const currentYear = new Date().getFullYear();
-        const jan1 = new Date(currentYear, 0, 1).toISOString();
-
-        let portfolioValue = 0;
+        // Get current account balance for portfolio value
+        const accountData = await apiClient.get('/trading/user/account').then((res: any) => res.data);
+        const portfolioValue = accountData.portfolio_value || 0;
+        
+        // Get portfolio history for performance calculations
+        const historyData = await getAccountPortfolioHistory();
+        
         let todayChange = 0;
         let todayChangePercent = 0;
         let ytdReturn = 0;
         let ytdReturnPercent = 0;
 
-        try {
-          // Get YTD portfolio history first (this will give us portfolio value too)
-          const ytdHistory = await getAccountPortfolioHistory({
-            start: jan1,
-            timeframe: '1D',
-            intraday_reporting: 'market_hours',
-            pnl_reset: 'no_reset',
-            force_engine_version: 'v2'
-          });
-
-          if (ytdHistory?.equity && ytdHistory.equity.length >= 2) {
-            const firstValue = ytdHistory.equity[0];
-            const lastValue = ytdHistory.equity[ytdHistory.equity.length - 1];
+        if (historyData?.equity && historyData.equity.length >= 2) {
+          // Calculate today's change (compare last two data points)
+          const lastEquity = historyData.equity[historyData.equity.length - 1];
+          const previousEquity = historyData.equity[historyData.equity.length - 2];
+          
+          if (typeof lastEquity === 'object' && lastEquity.equity !== undefined) {
+            const currentValue = lastEquity.equity;
+            const previousValue = previousEquity?.equity || currentValue;
             
-            // Use last equity value as current portfolio value
-            portfolioValue = lastValue;
-            
-            // Check if all equity values are zero (account didn't exist during YTD range)
-            const hasNonZeroEquity = ytdHistory.equity.some((value: number) => value > 0);
-            
-            if (!hasNonZeroEquity) {
-              // All equity values are zero - use fallback calculation
-              portfolioValue = 0; // Will be set from today's data
-              ytdReturn = 0; // Will be calculated in fallback
-              ytdReturnPercent = 0; // Will be calculated in fallback
-            } else if (firstValue > 0) {
-              // Normal case: we have actual equity data from Jan 1
-              ytdReturn = lastValue - firstValue;
-              ytdReturnPercent = (ytdReturn / firstValue) * 100;
-            } else if (ytdHistory.base_value && ytdHistory.base_value > 0) {
-              // Account created after Jan 1: use base_value as starting point
-              ytdReturn = lastValue - ytdHistory.base_value;
-              ytdReturnPercent = (ytdReturn / ytdHistory.base_value) * 100;
-            } else {
-              // Fallback: show current portfolio value as absolute gain
-              ytdReturn = lastValue;
-              ytdReturnPercent = lastValue > 0 ? 100 : 0;
-            }
-          } else if (ytdHistory?.base_value && ytdHistory.base_value > 0) {
-            // Edge case: no equity array but we have base_value
-            portfolioValue = ytdHistory.base_value;
-            ytdReturn = 0;
-            ytdReturnPercent = 0;
+            todayChange = currentValue - previousValue;
+            todayChangePercent = previousValue > 0 ? (todayChange / previousValue) * 100 : 0;
           } else {
-            // YTD data is missing - use fallback calculation
-            portfolioValue = 0; // Will be set from today's data
-            ytdReturn = 0; // Will be calculated in fallback
-            ytdReturnPercent = 0; // Will be calculated in fallback
+            // Handle case where equity is just a number
+            todayChange = lastEquity - previousEquity;
+            todayChangePercent = previousEquity > 0 ? (todayChange / previousEquity) * 100 : 0;
           }
 
-          // Get daily P/L using proper parameters
-          const todayHistory = await getAccountPortfolioHistory({
-            period: '1D',
-            timeframe: '5Min',
-            intraday_reporting: 'extended_hours',
-            pnl_reset: 'per_day',
-            force_engine_version: 'v2'
-          });
-
-          if (todayHistory?.pnl_pct && todayHistory.pnl_pct.length > 0) {
-            // Use Alpaca's official daily P/L percentage
-            const lastPct = todayHistory.pnl_pct[todayHistory.pnl_pct.length - 1] || 0;
-            todayChangePercent = lastPct * 100;
-            todayChange = (todayChangePercent / 100) * portfolioValue;
-          } else if (todayHistory?.equity && todayHistory.equity.length >= 2) {
-            // Fallback to manual calculation if pnl_pct not available
-            const firstValue = todayHistory.equity[0];
-            const lastValue = todayHistory.equity[todayHistory.equity.length - 1];
-            todayChange = lastValue - firstValue;
-            todayChangePercent = firstValue > 0 ? (todayChange / firstValue) * 100 : 0;
-            
-            // Update portfolio value if we didn't get it from YTD
-            if (portfolioValue === 0) {
-              portfolioValue = lastValue;
-            }
-          }
-
-          // Fallback YTD calculation if YTD response didn't provide usable data
-          if (ytdReturn === 0 && ytdReturnPercent === 0 && portfolioValue > 0) {
-            const knownBaseValue = 50000;
-            ytdReturn = portfolioValue - knownBaseValue;
-            ytdReturnPercent = (ytdReturn / knownBaseValue) * 100;
-          }
-
-        } catch (perfError: any) {
-          // Handle portfolio history errors gracefully
-          if (perfError.response?.status === 422) {
-            // 422 validation errors are expected when portfolio history isn't available
-            console.debug('Portfolio history endpoint not available, using placeholder values');
-          } else {
-            console.warn('Portfolio history not available, using placeholder values:', perfError.message);
-          }
-          // Use placeholder values if endpoints aren't available
-          portfolioValue = 10000; // Default portfolio value
-          todayChange = portfolioValue * 0.0061; // ~0.61% gain example
-          todayChangePercent = 0.61;
-          ytdReturn = portfolioValue * 0.0501; // ~5.01% YTD example
-          ytdReturnPercent = 5.01;
+          // Calculate YTD return (first vs last)
+          const firstEquity = historyData.equity[0];
+          const lastEquityValue = historyData.equity[historyData.equity.length - 1];
+          
+          const startValue = typeof firstEquity === 'object' ? firstEquity.equity : firstEquity;
+          const endValue = typeof lastEquityValue === 'object' ? lastEquityValue.equity : lastEquityValue;
+          
+          ytdReturn = endValue - startValue;
+          ytdReturnPercent = startValue > 0 ? (ytdReturn / startValue) * 100 : 0;
         }
 
         setPortfolioData({
@@ -242,14 +173,8 @@ export const PortfolioSummaryCards = ({
         });
 
       } catch (err: any) {
-        // Handle main portfolio data errors gracefully
-        if (err.response?.status === 422) {
-          console.debug('Portfolio data validation error, using default values');
-          setPortfolioError('Portfolio data temporarily unavailable');
-        } else {
-          console.error('Failed to load portfolio data:', err.message || err);
-          setPortfolioError(err.message || 'Failed to load portfolio data');
-        }
+        console.error('Failed to load portfolio data:', err.message || err);
+        setPortfolioError(err.message || 'Failed to load portfolio data');
       } finally {
         setLoadingPortfolio(false);
       }

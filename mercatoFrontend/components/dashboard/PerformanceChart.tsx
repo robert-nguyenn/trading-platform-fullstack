@@ -188,37 +188,76 @@ const EnhancedLineChart = ({ data }: { data: PerformanceDataPoint[] }) => {
 
 // Format the data for the chart
 const formatChartData = (data: PortfolioHistoryResponse, selectedRange?: string): PerformanceDataPoint[] => {
-  if (!data || !data.timestamp || !data.equity) return []
+  if (!data || !data.equity) return []
 
-  const timestamps = data.timestamp
-  const equities = data.equity
+  // Handle both array of objects and separate timestamp/equity arrays
+  if (Array.isArray(data.equity) && data.equity.length > 0) {
+    const firstItem = data.equity[0]
+    
+    // If equity is an array of objects with timestamp and equity properties
+    if (typeof firstItem === 'object' && firstItem !== null && 'timestamp' in firstItem && 'equity' in firstItem) {
+      return data.equity.map((item: any, index: number) => {
+        const date = new Date(item.timestamp)
+        let label = ""
 
-  return timestamps.map((timestamp, index) => {
-    const date = new Date(timestamp * 1000)
-    let label = ""
+        // Format label based on timeframe
+        switch (selectedRange) {
+          case "1D":
+            label = format(date, "HH:mm")
+            break
+          case "1W":
+          case "1M":
+          case "3M":
+          case "YTD":
+          case "1Y":
+            label = format(date, "MMM d")
+            break
+          default:
+            label = format(date, "MMM yyyy")
+        }
 
-    // Format label based on timeframe
-    switch (selectedRange) {
-      case "1D":
-        label = format(date, "HH:mm")
-        break
-      case "1W":
-      case "1M":
-      case "3M":
-      case "YTD":
-      case "1Y":
-        label = format(date, "MMM d")
-        break
-      default:
-        label = format(date, "MMM yyyy")
+        return {
+          timestamp: new Date(item.timestamp).getTime() / 1000,
+          value: item.equity,
+          label,
+        }
+      })
+    } 
+    // If we have separate timestamp and equity arrays (original format)
+    else if (data.timestamp && Array.isArray(data.timestamp)) {
+      const timestamps = data.timestamp
+      const equities = data.equity as number[]
+
+      return timestamps.map((timestamp, index) => {
+        const date = new Date(timestamp * 1000)
+        let label = ""
+
+        // Format label based on timeframe
+        switch (selectedRange) {
+          case "1D":
+            label = format(date, "HH:mm")
+            break
+          case "1W":
+          case "1M":
+          case "3M":
+          case "YTD":
+          case "1Y":
+            label = format(date, "MMM d")
+            break
+          default:
+            label = format(date, "MMM yyyy")
+        }
+
+        return {
+          timestamp,
+          value: equities[index],
+          label,
+        }
+      })
     }
+  }
 
-    return {
-      timestamp,
-      value: equities[index],
-      label,
-    }
-  })
+  return []
 }
 
 // Calculate percentage return for a given range
@@ -228,144 +267,39 @@ const calculateReturn = (data: PortfolioHistoryResponse, range: string, allPortf
   let change = 0
   let percentChange = 0
 
-  // For 1D range, prefer pnl_pct if available
-  if (range === "1D" && data.pnl_pct && data.pnl_pct.length > 0) {
-    const lastPct = data.pnl_pct[data.pnl_pct.length - 1] || 0
-    percentChange = lastPct * 100
-    const currentValue = data.equity[data.equity.length - 1]
-    change = (percentChange / 100) * currentValue
+  // Extract equity values - handle both array of objects and plain number arrays
+  let equityValues: number[] = []
+  if (Array.isArray(data.equity) && data.equity.length > 0) {
+    const firstItem = data.equity[0]
+    if (typeof firstItem === 'object' && firstItem !== null && 'equity' in firstItem) {
+      // Array of objects with equity property
+      equityValues = data.equity.map((item: any) => item.equity)
+    } else {
+      // Plain number array
+      equityValues = data.equity as number[]
+    }
+  }
+
+  if (equityValues.length < 2) return "0.00%"
+
+  const lastValue = equityValues[equityValues.length - 1]
+  const firstValue = equityValues[0]
+
+  // For 1D range, try to use profit_loss data if available
+  if (range === "1D" && data.profit_loss && Array.isArray(data.profit_loss) && data.profit_loss.length > 0) {
+    const lastProfitLoss = data.profit_loss[data.profit_loss.length - 1]
+    if (typeof lastProfitLoss === 'object' && lastProfitLoss !== null && 'profit_loss_pct' in lastProfitLoss) {
+      percentChange = (lastProfitLoss as any).profit_loss_pct
+      change = (lastProfitLoss as any).profit_loss
+    } else {
+      // Fallback to manual calculation
+      change = lastValue - firstValue
+      percentChange = firstValue > 0 ? (change / firstValue) * 100 : 0
+    }
   } else {
-    const lastValue = data.equity[data.equity.length - 1]
-    let firstValue = data.equity[0]
-    let startIndex = 0
-    
-    // Check if all equity values are zero (account didn't exist during this range)
-    const hasNonZeroEquity = data.equity.some((value: number) => value > 0)
-    if (!hasNonZeroEquity) {
-      // All values are zero - calculate since inception for YTD/1Y
-      if ((range === "YTD" || range === "1Y") && allPortfolioData) {
-        // Get current portfolio value from other ranges
-        let currentPortfolioValue = 0
-        const rangesToCheck = ["1D", "1M", "3M"]
-        for (const checkRange of rangesToCheck) {
-          if (allPortfolioData[checkRange] && allPortfolioData[checkRange].equity.length > 0) {
-            const lastEquity = allPortfolioData[checkRange].equity[allPortfolioData[checkRange].equity.length - 1]
-            if (lastEquity > 0) {
-              currentPortfolioValue = lastEquity
-              break
-            }
-          }
-        }
-        
-        // Use known base value
-        const knownBaseValue = 50000
-        
-        if (currentPortfolioValue > 0) {
-          const returnAmount = currentPortfolioValue - knownBaseValue
-          const sign = returnAmount >= 0 ? "+" : ""
-          return `${sign}$${returnAmount.toFixed(2)} (Since Apr)`
-        }
-      }
-      
-      return "0.00%"
-    }
-
-    // Find start point for the range
-    if (data.timestamp && data.timestamp.length > 0) {
-      const currentTimestamp = data.timestamp[data.timestamp.length - 1]
-      const earliestTimestamp = data.timestamp[0]
-      let targetSecondsBack: number
-      
-      switch (range) {
-        case "1W":
-          targetSecondsBack = 7 * 24 * 60 * 60
-          break
-        case "1M":
-          targetSecondsBack = 30 * 24 * 60 * 60
-          break
-        case "3M":
-          targetSecondsBack = 90 * 24 * 60 * 60
-          break
-        case "YTD":
-          const jan1 = new Date(new Date().getFullYear(), 0, 1)
-          targetSecondsBack = (Date.now() / 1000 - jan1.getTime() / 1000)
-          break
-        case "1Y":
-          targetSecondsBack = 365 * 24 * 60 * 60
-          break
-        default:
-          targetSecondsBack = 24 * 60 * 60
-      }
-      
-      const targetTimestamp = currentTimestamp - targetSecondsBack
-      
-      // Check if target timestamp is before our earliest data
-      if (targetTimestamp < earliestTimestamp) {
-        // Check if this is a long-term range (YTD, 1Y) and account is newer
-        if ((range === "YTD" || range === "1Y") && allPortfolioData) {
-          // Get current portfolio value from other ranges
-          let currentPortfolioValue = 0
-          const rangesToCheck = ["1D", "1M", "3M"]
-          for (const checkRange of rangesToCheck) {
-            if (allPortfolioData[checkRange] && allPortfolioData[checkRange].equity.length > 0) {
-              const lastEquity = allPortfolioData[checkRange].equity[allPortfolioData[checkRange].equity.length - 1]
-              if (lastEquity > 0) {
-                currentPortfolioValue = lastEquity
-                break
-              }
-            }
-          }
-          
-          // Use known base value
-          const knownBaseValue = 50000
-          
-          if (currentPortfolioValue > 0) {
-            const returnAmount = currentPortfolioValue - knownBaseValue
-            const sign = returnAmount >= 0 ? "+" : ""
-            return `${sign}$${returnAmount.toFixed(2)} (Since Apr)`
-          }
-        }
-        
-        startIndex = 0
-        firstValue = data.equity[startIndex]
-      } else {
-        // Find the closest timestamp
-        let bestIndex = 0
-        let bestDiff = Math.abs(data.timestamp[0] - targetTimestamp)
-        
-        for (let i = 1; i < data.timestamp.length; i++) {
-          const diff = Math.abs(data.timestamp[i] - targetTimestamp)
-          if (diff < bestDiff) {
-            bestDiff = diff
-            bestIndex = i
-          }
-        }
-        
-        startIndex = bestIndex
-        firstValue = data.equity[bestIndex]
-      }
-    }
-
-    // Validate first value
-    if (firstValue === undefined || firstValue === null || isNaN(firstValue) || firstValue === 0) {
-      const nonZeroValue = data.equity.find(val => val > 0)
-      if (nonZeroValue) {
-        firstValue = nonZeroValue
-      } else {
-        if (lastValue > 0) {
-          change = lastValue
-          percentChange = 100
-          const sign = change >= 0 ? "+" : ""
-          return `${sign}$${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)`
-        } else {
-          return "0.00%"
-        }
-      }
-    }
-
-    // Normal calculation
+    // Normal calculation for other ranges
     change = lastValue - firstValue
-    percentChange = (change / firstValue) * 100
+    percentChange = firstValue > 0 ? (change / firstValue) * 100 : 0
   }
 
   const sign = change >= 0 ? "+" : ""
