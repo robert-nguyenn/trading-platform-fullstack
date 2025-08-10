@@ -190,20 +190,20 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
                   │                       │                       │
                   ▼                       ▼                       ▼
 
-  ┌─────────────────┐ 1:N  ┌──────────────────┐ 1:N  ┌─────────────────┐
+  ┌─────────────────┐ 1:N  ┌──────────────────┐ 1:N   ┌─────────────────┐
   │      User       │─────▶│    Strategy      │─────▶│ StrategyBlock   │
-  ├─────────────────┤      ├──────────────────┤      ├─────────────────┤
-  │ id (UUID)       │      │ id (UUID)        │      │ id (UUID)       │
-  │ email (String)  │      │ userId (UUID) FK │      │ strategyId FK   │
-  │ tradingId (FK)  │      │ name (String)    │      │ blockType (Enum)│
-  │ createdAt       │      │ description      │      │ parameters(JSON)│
-  │ updatedAt       │      │ isActive (Bool)  │      │ parentId (FK)   │
-  └─────────────────┘      │ allocatedAmount  │      │ conditionId (FK)│
-                           │ rootBlockId (FK) │      │ actionId (FK)   │
-                           │ createdAt        │      │ order (Int)     │
-                           │ updatedAt        │      │ createdAt       │
-                           └──────────────────┘      │ updatedAt       │
-                                     │              └─────────────────┘
+  ├─────────────────┤      ├──────────────────┤       ├─────────────────┤
+  │ id (UUID)       │      │ id (UUID)        │       │ id (UUID)       │
+  │ email (String)  │      │ userId (UUID) FK │       │ strategyId FK   │
+  │ tradingId (FK)  │      │ name (String)    │       │ blockType (Enum)│
+  │ createdAt       │      │ description      │       │ parameters(JSON)│
+  │ updatedAt       │      │ isActive (Bool)  │       │ parentId (FK)   │
+  └─────────────────┘      │ allocatedAmount  │       │ conditionId (FK)│
+                           │ rootBlockId (FK) │       │ actionId (FK)   │
+                           │ createdAt        │       │ order (Int)     │
+                           │ updatedAt        │       │ createdAt       │
+                           └──────────────────┘       │ updatedAt       │
+                                     │                └─────────────────┘
                                      │                       │
                                      │           ┌───────────┼───────────┐
                                      │           │                       │
@@ -278,7 +278,7 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
   │ └── Strategy execution triggers and alerts              │
   │                                                         │
   │ Cache: Technical Indicators                             │
-  │ └── SMA, EMA, RSI, MACD, Bollinger Bands (TTL-based)   │
+  │ └── SMA, EMA, RSI, MACD, Bollinger Bands (TTL-based)    │
   │                                                         │
   │ Cache: Market Data                                      │
   │ └── Real-time price feeds and volume data               │
