@@ -1,0 +1,52 @@
+technicalIndicators.ts: Fetches specific indicator data from Alpha Vantage upon request, handles caching the response 
+(now including metadata like "Last Refreshed"), and publishes an "IndicatorDataUpdated" message to the Redis stream upon 
+successful fetch/update.
+
+cache.ts: Provides utility functions to generate consistent Redis keys for indicators based on their parameters, and to set/get 
+cached data along with its associated metadata and TTL.
+
+redisClient.ts: Initializes and exports a reusable Redis client instance, ensuring a single connection point for both caching and
+ the message queue publisher.
+
+scheduler/technicalStrategySource.ts: Queries the PostgreSQL database (via Prisma) to retrieve a distinct list of all indicators currently
+ referenced by active user strategies.
+
+scheduler/schedulerService.ts: Periodically runs the indicator discovery process (strategySource) and manages the scheduling (node-cron) 
+of fetch tasks for each unique active indicator found.
+
+scheduler/fetchOrchestrator.ts: Contains the core logic executed by each scheduled job; it determines the appropriate cron pattern, 
+checks cached metadata (shouldFetchBasedOnMetadata) to decide if an API call is needed, and triggers the actual data fetch 
+(getTechnicalIndicator).
+
+messageQueue/redisStreams.ts (Publisher part): Defines the name of the Redis Stream (indicator_updates) and provides the 
+publishIndicatorUpdate function used by technicalIndicators.ts to add new messages to the stream.
+
+
+Scheduler Service (schedulerService, fetchOrchestrator, technicalStrategySource):
+
+Technical: Periodically queries the database for indicators needed by active user strategies. It creates and manages timed jobs (cron) 
+to trigger data fetches based on the indicator's required frequency (e.g., every minute, daily). 
+It uses metadata checks to potentially skip fetches if cached data is still considered fresh by Alpha Vantage standards.
+
+Product: Acts as the automated "data freshness manager." It ensures the platform proactively seeks out the latest market data relevant 
+to users' active strategies, balancing the need for up-to-date information with efficient use of external API resources (like Alpha Vantage).
+
+Fetcher Service (technicalIndicators, cache):
+
+Technical: Executes the actual data retrieval from Alpha Vantage via HTTP requests (axios). It intelligently caches the responses in 
+Redis with appropriate time-to-live settings to minimize redundant API calls. Upon storing fresh data, it publishes an event message onto 
+the Redis Stream (indicatorUpdates) to signal that new data is available.
+
+Product: This is the "data acquisition arm." It fetches the raw numbers (like SMA values) that strategies rely on. The caching mechanism 
+enhances platform performance and reduces operational costs, while the event publishing ensures downstream systems are notified immediately 
+when data changes.
+
+Evaluation Service (evaluationService/consumer, evaluationService/evaluator):
+
+Technical: Listens continuously to the indicatorUpdates Redis Stream. When a new data event arrives, it identifies which user strategies
+ depend on that specific indicator (querying the database). It then fetches the corresponding data from Redis cache, performs the logical 
+ comparison defined in the strategy's condition (e.g., SMA > target value, checking crossovers), and determines if the condition is met.
+
+Product: Represents the "strategy execution engine." It takes the latest market data and applies the user's defined trading rules to it. 
+It's the core logic that decides if a strategy's criteria are satisfied, acting as the trigger point for potential actions like placing trades 
+or sending alerts.

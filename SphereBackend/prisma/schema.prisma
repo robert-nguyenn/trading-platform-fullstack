@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Strategy {
+  id                 String          @id @default(uuid())
+  userId             String
+  name               String
+  description        String?
+  isActive           Boolean         @default(false)
+  rootBlockId        String?         @unique
+  allocatedAmount    Float?          @default(0) // Amount user has allocated to this strategy
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  rootBlock          StrategyBlock?  @relation("StrategyRoot", fields: [rootBlockId], references: [id])
+  user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blocks             StrategyBlock[]
+}
+
+model StrategyBlock {
+  id           String            @id @default(uuid())
+  strategyId   String
+  blockType    StrategyBlockType
+  parameters   Json
+  parentId     String?
+  conditionId  String?
+  actionId     String?
+  order        Int               @default(0)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  strategyRoot Strategy?         @relation("StrategyRoot")
+  action       Action?           @relation(fields: [actionId], references: [id])
+  condition    Condition?        @relation(fields: [conditionId], references: [id])
+  parent       StrategyBlock?    @relation("BlockHierarchy", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  children     StrategyBlock[]   @relation("BlockHierarchy")
+  strategy     Strategy          @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+
+  @@index([strategyId])
+  @@index([parentId])
+  @@index([conditionId])
+  @@index([actionId])
+}
+
+model Condition {
+  id                String          @id @default(uuid())
+  indicatorType     String
+  dataSource        String?
+  dataKey           String?
+  symbol            String?
+  interval          String?
+  parameters        Json
+  operator          Operator
+  targetValue       Float?
+  targetIndicatorId String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  targetIndicator   Condition?      @relation("ConditionComparison", fields: [targetIndicatorId], references: [id])
+  comparisonSource  Condition[]     @relation("ConditionComparison")
+  strategyBlocks    StrategyBlock[]
+
+  @@index([indicatorType, symbol, interval])
+}
+
+model Action {
+  id             String          @id @default(uuid())
+  actionType     ActionType
+  parameters     Json
+  order          Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  strategyBlocks StrategyBlock[]
+}
+
+model User {
+  id         String     @id
+  email      String     @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  tradingId  String?    @unique
+  strategies Strategy[]
+}
+
+enum StrategyBlockType {
+  ROOT
+  WEIGHT
+  ASSET
+  GROUP
+  CONDITION_IF
+  FILTER
+  ACTION
+}
+
+enum Operator {
+  EQUALS
+  NOT_EQUALS
+  GREATER_THAN
+  LESS_THAN
+  GREATER_THAN_OR_EQUAL
+  LESS_THAN_OR_EQUAL
+  CROSSES_ABOVE
+  CROSSES_BELOW
+}
+
+enum ActionType {
+  BUY
+  SELL
+  NOTIFY
+  REBALANCE
+  LOG_MESSAGE
+}
+
+model PolymarketEvent {
+  id           Int      @id
+  ticker       String?  
+  slug         String? 
+  question     String? 
+  description  String?  
+  image        String?  
+  active       Boolean?  
+  closed       Boolean  
+  startDate    DateTime  
+  endDate      DateTime?  
+  volume       Float  
+  liquidity    Float  
+  tags         Json  
+  rawData      Json  
+  fetchedAt    DateTime @default(now())
+}
