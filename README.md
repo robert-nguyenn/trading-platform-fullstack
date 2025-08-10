@@ -39,9 +39,10 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 🔐 Authentication & Security
 
-![Authentication Flow](./screenshots/auth-flow.png)
+![Sign In](./screenshots/signin.png)
+![Sign Up](./screenshots/signup.png)
 
-*Secure multi-factor authentication with Firebase integration*
+*Secure authentication with Firebase integration and elegant UI design*
 
 **Enterprise-grade security features:**
 - 🔒 Firebase Authentication with multi-provider support
@@ -53,9 +54,11 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 📊 Strategy Builder
 
-![Strategy Builder Interface](./screenshots/strategy-builder.png)
+![Strategy Builder - Main Interface](./screenshots/strategy-builder.png)
+![Strategy Builder - Advanced Features](./screenshots/strategy-builder-2.png)
+![Strategy Builder - Flow View](./screenshots/strategy-builder-3.png)
 
-*Drag-and-drop visual strategy builder with real-time validation*
+*Comprehensive drag-and-drop visual strategy builder with real-time validation*
 
 **Advanced no-code strategy creation:**
 - 🎯 **Visual Flow Builder**: Intuitive drag-and-drop interface using ReactFlow
@@ -73,9 +76,11 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 📈 Real-Time Market Data
 
-![Market Data Dashboard](./screenshots/market-data.png)
+![Market Discovery](./screenshots/discover-page.png)
+![Geopolitical Analysis](./screenshots/geopolitical-analysis.png)
+![Technical Indicators](./screenshots/technical-indicators.png)
 
-*Live market data with advanced charting and analysis tools*
+*Comprehensive market data integration with advanced analysis tools*
 
 **Comprehensive market coverage:**
 - 📊 **Multi-Source Integration**: Alpaca Markets, FRED Economic Data, Polymarket
@@ -93,9 +98,12 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 🏠 Dashboard & Portfolio
 
-![Portfolio Dashboard](./screenshots/dashboard.png)
+![Dashboard - Light Mode](./screenshots/dashboard-light.png)
+![Dashboard - Dark Mode](./screenshots/dashboard-dark.png)
+![Portfolio Performance](./screenshots/portfolio-performance.png)
+![Current Holdings](./screenshots/holdings-light.png)
 
-*Comprehensive portfolio analytics with performance tracking*
+*Professional portfolio management with comprehensive analytics and theme support*
 
 **Professional portfolio management:**
 - 💰 **Real-time P&L**: Live profit/loss tracking with detailed breakdowns
@@ -121,9 +129,11 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 📱 User Experience
 
-![User Interface](./screenshots/ui-showcase.png)
+![Landing Page Hero](./screenshots/landing-hero.png)
+![Landing Page Features](./screenshots/landing-features.png)
+![Portfolio Light Mode](./screenshots/portfolio-light.png)
 
-*Modern, responsive design with dark/light themes*
+*Modern, responsive design with seamless light/dark theme transitions*
 
 **Cutting-edge user interface:**
 - 🎨 **Modern Design**: Clean, professional interface built with Tailwind CSS
@@ -284,24 +294,28 @@ NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
 
 ## 📸 Screenshots
 
-> **Note**: To display your screenshots in the README, you have a few options:
-> 1. **Move images to repository**: Create an `assets/` or `screenshots/` folder in your repo and move the images there
-> 2. **GitHub hosting**: If this repo is on GitHub, you can upload images to issues/releases and use those URLs
-> 3. **Cloud hosting**: Upload to services like Imgur, Cloudinary, or GitHub Pages
+### 🎯 Strategy Creation & Management
+![Strategy Builder Overview](./screenshots/strategy-builder.png)
+![Advanced Strategy Features](./screenshots/strategy-builder-2.png)
+![Strategy Flow Visualization](./screenshots/strategy-builder-3.png)
 
-```markdown
-### 🎯 Strategy Creation
-![Strategy Builder](./screenshots/strategy-builder.png)
+### 📊 Portfolio Dashboard & Analytics  
+![Dashboard Light Theme](./screenshots/dashboard-light.png)
+![Dashboard Dark Theme](./screenshots/dashboard-dark.png)
+![Portfolio Performance Analysis](./screenshots/portfolio-performance.png)
 
-### 📊 Portfolio Dashboard  
-![Dashboard](./screenshots/dashboard.png)
+### 📈 Market Analysis & Discovery
+![Market Discovery Interface](./screenshots/discover-page.png)
+![Geopolitical Analysis Tools](./screenshots/geopolitical-analysis.png)
+![Technical Indicator Explanations](./screenshots/technical-indicators.png)
 
-### 📈 Market Analysis
-![Market Data](./screenshots/market-analysis.png)
+### � Authentication & Onboarding
+![Sign In Interface](./screenshots/signin.png)
+![Sign Up Process](./screenshots/signup.png)
 
-### 📱 Mobile Experience
-![Mobile Interface](./screenshots/mobile-ui.png)
-```
+### 🎨 Landing Page & Marketing
+![Hero Section](./screenshots/landing-hero.png)
+![Features Showcase](./screenshots/landing-features.png)
 
 ## 🎯 Future Roadmap
 
