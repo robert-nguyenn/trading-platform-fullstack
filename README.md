@@ -39,8 +39,8 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 🔐 Authentication & Security
 
-![Sign In](./screenshots/signin.png)
 ![Sign Up](./screenshots/signup.png)
+![Sign In](./screenshots/signin.png)
 
 *Secure authentication with Firebase integration and elegant UI design*
 
@@ -54,9 +54,9 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ## 📊 Strategy Builder
 
+![Strategy Builder - Flow View](./screenshots/strategy-builder-3.png)
 ![Strategy Builder - Main Interface](./screenshots/strategy-builder.png)
 ![Strategy Builder - Advanced Features](./screenshots/strategy-builder-2.png)
-![Strategy Builder - Flow View](./screenshots/strategy-builder-3.png)
 
 *Comprehensive drag-and-drop visual strategy builder with real-time validation*
 
@@ -78,7 +78,6 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 
 ![Market Discovery](./screenshots/discover-page.png)
 ![Geopolitical Analysis](./screenshots/geopolitical-analysis.png)
-![Technical Indicators](./screenshots/technical-indicators.png)
 
 *Comprehensive market data integration with advanced analysis tools*
 
