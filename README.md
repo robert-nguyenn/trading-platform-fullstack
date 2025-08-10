@@ -296,6 +296,79 @@ NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
 
 ### 🎯 Strategy Creation & Management
 ![Strategy Builder Overview](./screenshots/strategy-builder.png)
+*Main strategy builder interface with drag-and-drop functionality*
+
+![Advanced Strategy Features](./screenshots/strategy-builder-2.png)
+*Advanced strategy configuration and block management*
+
+![Strategy Flow Visualization](./screenshots/strategy-builder-3.png)
+*Visual flow representation of trading logic*
+
+![Strategy Builder Advanced](./screenshots/strategy-builder-4.png)
+*Additional strategy building capabilities and tools*
+
+![Complete Strategy Workflow](./screenshots/strategy-builder-5.png)
+*End-to-end strategy creation demonstration*
+
+### 📊 Portfolio Dashboard & Analytics  
+![Dashboard Light Theme](./screenshots/dashboard-light.png)
+*Clean, professional dashboard with comprehensive portfolio overview*
+
+![Dashboard Dark Theme](./screenshots/dashboard-dark.png)
+*Elegant dark mode for extended trading sessions*
+
+![Portfolio Performance Analysis](./screenshots/portfolio-performance.png)
+*Detailed performance analytics and risk metrics*
+
+![Portfolio Performance Dark](./screenshots/portfolio-performance-dark.png)
+*Performance tracking optimized for dark theme*
+
+![Current Holdings Light](./screenshots/holdings-light.png)
+*Current holdings and position management interface*
+
+![Current Holdings Dark](./screenshots/holdings-dark.png)
+*Holdings view optimized for dark theme preferences*
+
+![Portfolio Overview](./screenshots/portfolio-light.png)
+*Complete portfolio management interface*
+
+### 📈 Market Analysis & Discovery
+![Market Discovery Interface](./screenshots/discover-page.png)
+*Advanced market screening and asset discovery tools*
+
+![Extended Discovery Features](./screenshots/discover-page-2.png)
+*Additional market analysis and filtering capabilities*
+
+![Geopolitical Analysis Tools](./screenshots/geopolitical-analysis.png)
+*Geopolitical events integration and market impact analysis*
+
+![Technical Indicator Explanations](./screenshots/technical-indicators.png)
+*Comprehensive technical indicator documentation and explanations*
+
+### 🔐 Authentication & Onboarding
+![Sign In Interface](./screenshots/signin.png)
+*Sleek authentication interface with Firebase integration*
+
+![Sign Up Process](./screenshots/signup.png)
+*User-friendly registration with real-time validation*
+
+### 🎨 Landing Page & Marketing
+![Hero Section](./screenshots/landing-hero.png)
+*Compelling landing page hero with clear value proposition*
+
+![Features Showcase](./screenshots/landing-features.png)
+*Feature highlights demonstrating platform capabilities*
+
+![Call to Action](./screenshots/landing-cta.png)
+*Conversion-optimized call-to-action section*
+
+## 🎯 Future Roadmap
+```
+
+## 📸 Screenshots
+
+### 🎯 Strategy Creation & Management
+![Strategy Builder Overview](./screenshots/strategy-builder.png)
 ![Advanced Strategy Features](./screenshots/strategy-builder-2.png)
 ![Strategy Flow Visualization](./screenshots/strategy-builder-3.png)
 
