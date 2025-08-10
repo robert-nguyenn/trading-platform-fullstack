@@ -20,6 +20,8 @@ model Strategy {
   rootBlock          StrategyBlock?  @relation("StrategyRoot", fields: [rootBlockId], references: [id])
   user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   blocks             StrategyBlock[]
+  backtestResults    BacktestResult[]
+  performanceMetrics PerformanceMetrics[]
 }
 
 model StrategyBlock {
@@ -77,12 +79,14 @@ model Action {
 }
 
 model User {
-  id         String     @id
-  email      String     @unique
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  tradingId  String?    @unique
-  strategies Strategy[]
+  id                 String     @id
+  email              String     @unique
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  tradingId          String?    @unique
+  strategies         Strategy[]
+  portfolioHistory   PortfolioHistory[]
+  performanceMetrics PerformanceMetrics[]
 }
 
 enum StrategyBlockType {
@@ -130,4 +134,119 @@ model PolymarketEvent {
   tags         Json  
   rawData      Json  
   fetchedAt    DateTime @default(now())
+}
+
+model MacroEvent {
+  id             String   @id
+  type           String   // INFLATION, EMPLOYMENT, GEOPOLITICAL, MONETARY_POLICY, ECONOMIC_INDICATOR
+  title          String
+  content        String
+  source         String
+  timestamp      DateTime
+  impact         String   // HIGH, MEDIUM, LOW
+  sentiment      String   // POSITIVE, NEGATIVE, NEUTRAL
+  relevantAssets Json     // Array of asset symbols
+  embedding      Json?    // Vector embedding for RAG
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  tradeSignals   TradeSignal[]
+  
+  @@index([type, timestamp])
+  @@index([impact])
+}
+
+model TradeSignal {
+  id          String      @id
+  eventId     String
+  asset       String
+  action      String      // BUY, SELL, HOLD
+  confidence  Float       // 0.0 to 1.0
+  reasoning   String
+  timeframe   String      // 1d, 1w, 1m
+  impact      String      // HIGH, MEDIUM, LOW
+  generatedAt DateTime
+  createdAt   DateTime    @default(now())
+  
+  // Relations
+  event       MacroEvent  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  @@index([asset, generatedAt])
+  @@index([action, confidence])
+}
+
+model BacktestResult {
+  id               String   @id @default(uuid())
+  strategyId       String
+  startDate        DateTime
+  endDate          DateTime
+  initialCapital   Float
+  finalValue       Float
+  totalReturn      Float
+  annualizedReturn Float
+  sharpeRatio      Float?
+  maxDrawdown      Float?
+  winRate          Float?
+  totalTrades      Int      @default(0)
+  winningTrades    Int      @default(0)
+  losingTrades     Int      @default(0)
+  avgWin           Float?
+  avgLoss          Float?
+  parameters       Json     // Backtest configuration
+  trades           Json     // Individual trade records
+  metrics          Json     // Additional performance metrics
+  createdAt        DateTime @default(now())
+  
+  // Relations
+  strategy         Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  
+  @@index([strategyId, createdAt])
+}
+
+model PortfolioHistory {
+  id           String   @id @default(uuid())
+  userId       String
+  timestamp    DateTime
+  totalValue   Float
+  cash         Float
+  positions    Json     // Position details
+  dayChange    Float?
+  dayChangePercent Float?
+  unrealizedPnl Float?
+  realizedPnl  Float?
+  createdAt    DateTime @default(now())
+  
+  // Relations
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, timestamp])
+}
+
+model PerformanceMetrics {
+  id                String   @id @default(uuid())
+  strategyId        String
+  userId            String
+  date              DateTime
+  totalValue        Float
+  dayReturn         Float
+  cumulativeReturn  Float
+  sharpeRatio       Float?
+  volatility        Float?
+  maxDrawdown       Float?
+  beta              Float?
+  alpha             Float?
+  sortino           Float?
+  calmar            Float?
+  var95             Float?   // Value at Risk 95%
+  var99             Float?   // Value at Risk 99%
+  createdAt         DateTime @default(now())
+  
+  // Relations
+  strategy          Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([strategyId, date])
+  @@index([userId, date])
+  @@unique([strategyId, date])
 }

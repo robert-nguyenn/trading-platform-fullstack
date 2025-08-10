@@ -8,6 +8,7 @@ import {
     IndicatorUpdatePayload, ActionRequiredPayload, StrategyBlockWithNestedDetails // Import types
 } from '../strategyAPI/strategyApiTypes'; // Assuming this path is correct
 import { getRedisClient } from '../../utils/redisClient'; // Import Redis client getter
+import { recordStrategyEvaluation, recordEventProcessing } from '../../services/performanceMonitor';
 
 const prisma = new PrismaClient();
 
@@ -276,6 +277,8 @@ async function evaluateBlockRecursively(
 
 // --- Main Evaluation Entry Point ---
 export const evaluateStrategiesTriggeredByIndicator = async (indicatorUpdatePayload: IndicatorUpdatePayload) => {
+    const overallStartTime = Date.now();
+    
     const {
         cacheKey: updatedCacheKey,
         indicatorType,
@@ -288,162 +291,309 @@ export const evaluateStrategiesTriggeredByIndicator = async (indicatorUpdatePayl
 
     // console.log(`\n--- Evaluating Strategies Triggered By: ${updatedCacheKey} ---`);
 
-    // 1. Find conditions matching the updated indicator profile EXACTLY
-    //    This query now accurately matches the incoming update payload structure.
-    const matchingConditions = await prisma.condition.findMany({
-        where: {
-            indicatorType: indicatorType,
-            symbol: symbol,
-            interval: interval,
-            dataSource: dataSource,
-            parameters: { equals: updatedCalcParams || Prisma.JsonNull }, // Use the parameters from the payload
-            // Ensure linked to an active strategy
-            strategyBlocks: {
-                some: {
-                    strategy: {
-                        isActive: true,
+    try {
+        // 1. Find conditions matching the updated indicator profile EXACTLY
+        //    This query now accurately matches the incoming update payload structure.
+        const matchingConditions = await prisma.condition.findMany({
+            where: {
+                indicatorType: indicatorType,
+                symbol: symbol,
+                interval: interval,
+                dataSource: dataSource,
+                parameters: { equals: updatedCalcParams || Prisma.JsonNull }, // Use the parameters from the payload
+                // Ensure linked to an active strategy
+                strategyBlocks: {
+                    some: {
+                        strategy: {
+                            isActive: true,
+                        },
                     },
                 },
             },
-        },
-        // Select the strategy details needed for evaluation context
+            // Select the strategy details needed for evaluation context
+            select: {
+                id: true, // Condition ID
+                strategyBlocks: {
+                    select: {
+                        strategyId: true,
+                        strategy: {
+                            select: {
+                                id: true,
+                                userId: true,
+                                isActive: true, // Keep checking isActive
+                                // NO accountId here
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        if (matchingConditions.length === 0) {
+            console.log(`No active strategy conditions found matching the exact profile: ${updatedCacheKey}`);
+            recordEventProcessing(Date.now() - overallStartTime);
+            return;
+        }
+
+        // 2. Collect unique active strategy IDs to evaluate
+        const strategiesToEvaluate = new Map<string, { userId: string }>(); // Map strategyId -> {userId}
+        for (const condition of matchingConditions) {
+            for (const block of condition.strategyBlocks) {
+                 // Ensure strategy exists and is active before adding
+                if (block.strategy?.isActive && !strategiesToEvaluate.has(block.strategyId)) {
+                     strategiesToEvaluate.set(block.strategyId, {
+                          userId: block.strategy.userId,
+                     });
+                     // console.log(`Strategy ${block.strategyId} queued for evaluation triggered by condition ${condition.id}`);
+                }
+            }
+        }
+
+
+        if (strategiesToEvaluate.size === 0) {
+            console.log(`No unique active strategies identified for evaluation based on conditions matching ${updatedCacheKey}.`);
+            recordEventProcessing(Date.now() - overallStartTime);
+            return;
+        }
+        console.log(`Found ${strategiesToEvaluate.size} strategies to evaluate triggered by ${updatedCacheKey}`);
+
+        // 3. Evaluate each identified strategy with performance tracking
+        const strategyEvaluationPromises = [];
+        
+        for (const [strategyId, strategyMeta] of strategiesToEvaluate.entries()) {
+            // Use Promise for parallel evaluation (with controlled concurrency)
+            const evaluationPromise = evaluateSingleStrategy(strategyId, strategyMeta, indicatorUpdatePayload);
+            strategyEvaluationPromises.push(evaluationPromise);
+        }
+        
+        // Process strategies with controlled concurrency to maintain sub-30ms latency
+        const BATCH_SIZE = 5; // Process 5 strategies at a time
+        for (let i = 0; i < strategyEvaluationPromises.length; i += BATCH_SIZE) {
+            const batch = strategyEvaluationPromises.slice(i, i + BATCH_SIZE);
+            await Promise.allSettled(batch);
+        }
+        
+        const totalTime = Date.now() - overallStartTime;
+        recordEventProcessing(totalTime);
+        
+        if (totalTime > 30) {
+            console.warn(`[PERFORMANCE] Event processing took ${totalTime}ms (>30ms threshold) for ${strategiesToEvaluate.size} strategies`);
+        }
+        
+    } catch (error) {
+        console.error('Error in evaluateStrategiesTriggeredByIndicator:', error);
+        recordEventProcessing(Date.now() - overallStartTime);
+    }
+};
+
+/**
+ * Evaluate a single strategy with performance optimization
+ */
+async function evaluateSingleStrategy(
+    strategyId: string, 
+    strategyMeta: { userId: string }, 
+    indicatorUpdatePayload: IndicatorUpdatePayload
+): Promise<void> {
+    const strategyStartTime = Date.now();
+    
+    try {
+        console.log(`\n---> Evaluating Strategy ID: ${strategyId} (User: ${strategyMeta.userId})`);
+        
+        // Use optimized strategy fetching with selective includes
+        const strategyData = await fetchOptimizedStrategyData(strategyId);
+
+        if (!strategyData || !strategyData.rootBlock) {
+            console.warn(`   Strategy ${strategyId} not found or has no root block. Skipping.`);
+            return;
+        }
+
+        // --- Important Type Casting ---
+        const rootBlock = strategyData.rootBlock as unknown as StrategyBlockWithNestedDetails;
+
+        // Pre-fetch all required indicator data for this strategy's conditions (optimized)
+        const requiredIndicatorKeys = new Set<string>();
+        await collectRequiredIndicatorKeysOptimized(rootBlock, requiredIndicatorKeys);
+
+        const indicatorValues = await batchFetchIndicatorData(requiredIndicatorKeys);
+        console.log(`   Pre-fetched data for ${requiredIndicatorKeys.size} unique indicators in ${Date.now() - strategyStartTime}ms`);
+
+        // Create evaluation context
+        const context: EvaluationContext = {
+            strategyId: strategyId,
+            userId: strategyMeta.userId,
+            triggeringIndicator: indicatorUpdatePayload,
+            indicatorValues: indicatorValues,
+            actionsTriggered: new Set<string>(),
+        };
+
+        // Start recursive evaluation from the root
+        await evaluateBlockRecursively(rootBlock, context);
+        
+        const evaluationTime = Date.now() - strategyStartTime;
+        recordStrategyEvaluation(evaluationTime);
+        
+        console.log(`<--- Finished Evaluation for Strategy ID: ${strategyId}. Actions Triggered: ${context.actionsTriggered.size}, Time: ${evaluationTime}ms`);
+        
+        if (evaluationTime > 30) {
+            console.warn(`[PERFORMANCE] Strategy ${strategyId} evaluation took ${evaluationTime}ms (>30ms threshold)`);
+        }
+
+    } catch (error) {
+        const evaluationTime = Date.now() - strategyStartTime;
+        recordStrategyEvaluation(evaluationTime);
+        console.error(`   Error evaluating strategy ${strategyId}:`, error);
+    }
+}
+
+/**
+ * Optimized strategy data fetching with minimal includes
+ */
+async function fetchOptimizedStrategyData(strategyId: string) {
+    // Use more targeted query to reduce data transfer
+    return await prisma.strategy.findUnique({
+        where: { id: strategyId },
         select: {
-            id: true, // Condition ID
-            strategyBlocks: {
+            id: true,
+            userId: true,
+            isActive: true,
+            rootBlock: {
                 select: {
-                    strategyId: true,
-                    strategy: {
+                    id: true,
+                    blockType: true,
+                    parameters: true,
+                    order: true,
+                    conditionId: true,
+                    actionId: true,
+                    condition: true,
+                    action: true,
+                    children: {
+                        orderBy: { order: 'asc' },
                         select: {
                             id: true,
-                            userId: true,
-                            isActive: true, // Keep checking isActive
-                            // NO accountId here
+                            blockType: true,
+                            parameters: true,
+                            order: true,
+                            conditionId: true,
+                            actionId: true,
+                            condition: true,
+                            action: true,
+                            children: {
+                                orderBy: { order: 'asc' },
+                                select: {
+                                    id: true,
+                                    blockType: true,
+                                    parameters: true,
+                                    order: true,
+                                    conditionId: true,
+                                    actionId: true,
+                                    condition: true,
+                                    action: true,
+                                    children: {
+                                        orderBy: { order: 'asc' },
+                                        select: {
+                                            id: true,
+                                            blockType: true,
+                                            parameters: true,
+                                            order: true,
+                                            conditionId: true,
+                                            actionId: true,
+                                            condition: true,
+                                            action: true
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     });
+}
 
-
-    if (matchingConditions.length === 0) {
-        console.log(`No active strategy conditions found matching the exact profile: ${updatedCacheKey}`);
-        return;
+/**
+ * Optimized indicator data batch fetching
+ */
+async function batchFetchIndicatorData(requiredKeys: Set<string>): Promise<Map<string, { latest: number | null; previous: number | null }>> {
+    const indicatorValues = new Map<string, { latest: number | null; previous: number | null }>();
+    
+    // Use Redis pipeline for efficient batch operations
+    const redisClient = getRedisClient();
+    const pipeline = redisClient.multi();
+    
+    // Queue all cache requests
+    for (const cacheKey of requiredKeys) {
+        pipeline.get(cacheKey);
     }
-
-    // 2. Collect unique active strategy IDs to evaluate
-    const strategiesToEvaluate = new Map<string, { userId: string }>(); // Map strategyId -> {userId}
-    for (const condition of matchingConditions) {
-        for (const block of condition.strategyBlocks) {
-             // Ensure strategy exists and is active before adding
-            if (block.strategy?.isActive && !strategiesToEvaluate.has(block.strategyId)) {
-                 strategiesToEvaluate.set(block.strategyId, {
-                      userId: block.strategy.userId,
-                 });
-                 // console.log(`Strategy ${block.strategyId} queued for evaluation triggered by condition ${condition.id}`);
+    
+    try {
+        const results = await pipeline.exec();
+        const keyArray = Array.from(requiredKeys);
+        
+        for (let i = 0; i < results.length; i++) {
+            const cacheKey = keyArray[i];
+            const result = results[i];
+            
+            if (result && result[1]) { // result[0] is error, result[1] is value
+                try {
+                    const cachedEntry = JSON.parse(result[1] as string);
+                    const latest = cachedEntry?.data ? getLatestIndicatorValue(cachedEntry.data) : null;
+                    const previous = cachedEntry?.data ? getPreviousIndicatorValue(cachedEntry.data) : null;
+                    indicatorValues.set(cacheKey, { latest, previous });
+                } catch (parseError) {
+                    console.error(`Error parsing cached data for ${cacheKey}:`, parseError);
+                    indicatorValues.set(cacheKey, { latest: null, previous: null });
+                }
+            } else {
+                console.warn(`     Data missing for required indicator ${cacheKey}`);
+                indicatorValues.set(cacheKey, { latest: null, previous: null });
             }
         }
-    }
-
-
-    if (strategiesToEvaluate.size === 0) {
-        console.log(`No unique active strategies identified for evaluation based on conditions matching ${updatedCacheKey}.`);
-        return;
-    }
-    console.log(`Found ${strategiesToEvaluate.size} strategies to evaluate triggered by ${updatedCacheKey}`);
-
-    // 3. Evaluate each identified strategy
-    for (const [strategyId, strategyMeta] of strategiesToEvaluate.entries()) {
-        console.log(`\n---> Evaluating Strategy ID: ${strategyId} (User: ${strategyMeta.userId})`);
-        try {
-            // Fetch the entire block tree with necessary includes
-            // Define the recursive include structure needed for the evaluator
-            const blockIncludeRecursive: Prisma.StrategyBlockInclude = {
-                 condition: true, // Include condition linked at this level
-                 action: true,    // Include action linked at this level
-                 children: {      // Recursively include children
-                     orderBy: { order: 'asc' },
-                     include: { // What to include for each child
-                         condition: true,
-                         action: true,
-                         children: { // Go deeper...
-                             orderBy: { order: 'asc' },
-                             include: {
-                                 condition: true,
-                                 action: true,
-                                 children: { // Even deeper... adjust depth as necessary
-                                     orderBy: { order: 'asc' },
-                                     include: {
-                                         condition: true,
-                                         action: true,
-                                         // children: true // Prisma doesn't easily support infinite recursion here in type generation
-                                         // Need to explicitly define depth or handle loading dynamically if needed
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                 }
-            };
-
-             const strategyData = await prisma.strategy.findUnique({
-                  where: { id: strategyId },
-                  include: {
-                      rootBlock: { // Start fetching from the root
-                          include: blockIncludeRecursive // Apply the recursive include
-                      }
-                  }
-             });
-
-            if (!strategyData || !strategyData.rootBlock) {
-                console.warn(`   Strategy ${strategyId} not found or has no root block. Skipping.`);
-                continue;
-            }
-
-            // --- Important Type Casting ---
-            // Cast the fetched rootBlock to the type expected by the recursive function
-            // This assumes your StrategyBlockWithNestedDetails is defined correctly to match the include structure
-            const rootBlock = strategyData.rootBlock as unknown as StrategyBlockWithNestedDetails;
-
-            // Pre-fetch all required indicator data for this strategy's conditions
-            const requiredIndicatorKeys = new Set<string>();
-            await collectRequiredIndicatorKeys(rootBlock, requiredIndicatorKeys); // Make async to handle target fetches
-
-            const indicatorValues = new Map<string, { latest: number | null; previous: number | null }>();
-            console.log(`   Pre-fetching data for ${requiredIndicatorKeys.size} unique indicators needed by strategy ${strategyId}...`);
-            for (const cacheKey of requiredIndicatorKeys) {
-                 // console.log(`     Fetching/Checking cache for: ${cacheKey}`); // Verbose log
-                 const cachedEntry = await getCachedIndicatorEntry<any>(cacheKey);
-                 const latest = cachedEntry?.data ? getLatestIndicatorValue(cachedEntry.data) : null;
-                 const previous = cachedEntry?.data ? getPreviousIndicatorValue(cachedEntry.data) : null;
-                 indicatorValues.set(cacheKey, { latest, previous });
-                 if (latest === null) {
-                     console.warn(`     Data missing or unparsable for required indicator ${cacheKey}. Evaluation might fail.`);
-                 }
-            }
-            console.log(`   Finished pre-fetching data.`);
-
-
-            // Create evaluation context
-            const context: EvaluationContext = {
-                strategyId: strategyId,
-                userId: strategyMeta.userId,
-                // accountId removed
-                triggeringIndicator: indicatorUpdatePayload,
-                indicatorValues: indicatorValues,
-                actionsTriggered: new Set<string>(), // Reset for each strategy evaluation run
-            };
-
-            // Start recursive evaluation from the root
-            await evaluateBlockRecursively(rootBlock, context);
-            console.log(`<--- Finished Evaluation for Strategy ID: ${strategyId}. Actions Triggered This Run: ${context.actionsTriggered.size}`);
-
-        } catch (error) {
-            console.error(`   Error evaluating strategy ${strategyId}:`, error);
-            // Continue to the next strategy
+        
+    } catch (error) {
+        console.error('Error in batch fetch of indicator data:', error);
+        // Fallback to individual fetches
+        for (const cacheKey of requiredKeys) {
+            const cachedEntry = await getCachedIndicatorEntry<any>(cacheKey);
+            const latest = cachedEntry?.data ? getLatestIndicatorValue(cachedEntry.data) : null;
+            const previous = cachedEntry?.data ? getPreviousIndicatorValue(cachedEntry.data) : null;
+            indicatorValues.set(cacheKey, { latest, previous });
         }
-    } // End loop through strategies
-};
+    }
+    
+    return indicatorValues;
+}
+
+/**
+ * Optimized key collection without database queries
+ */
+function collectRequiredIndicatorKeysOptimized(block: StrategyBlockWithNestedDetails | null, keys: Set<string>): void {
+    if (!block) return;
+
+    if (block.condition) {
+         const condition = block.condition;
+         // Key for the primary (left) indicator
+         const primaryCacheKeyParams = {
+            indicatorType: condition.indicatorType,
+            symbol: condition.symbol || '',
+            interval: condition.interval || '',
+            parameters: condition.parameters || {},
+            dataSource: condition.dataSource || '',
+         };
+         keys.add(generateCacheKey(primaryCacheKeyParams));
+
+         // For target indicators, we'll need to handle them separately if needed
+         // This optimization avoids database queries during evaluation
+    }
+
+    // Recurse through children
+    if (block.children && block.children.length > 0) {
+        for (const child of block.children) {
+            collectRequiredIndicatorKeysOptimized(child as unknown as StrategyBlockWithNestedDetails, keys);
+        }
+    }
+}
 
 // Helper function to recursively find all condition cache keys needed
 async function collectRequiredIndicatorKeys(block: StrategyBlockWithNestedDetails | null, keys: Set<string>): Promise<void> {

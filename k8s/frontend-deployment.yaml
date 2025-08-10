@@ -1,0 +1,102 @@
+# Mercato Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mercato-frontend
+  labels:
+    app: mercato-frontend
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mercato-frontend
+  template:
+    metadata:
+      labels:
+        app: mercato-frontend
+        tier: frontend
+    spec:
+      containers:
+      - name: mercato-frontend
+        image: mercato/frontend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: NEXT_PUBLIC_API_URL
+          value: "https://api.mercato.trading"
+        - name: NEXT_PUBLIC_FIREBASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: firebase-api-key
+        - name: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: firebase-auth-domain
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mercato-frontend-service
+  labels:
+    app: mercato-frontend
+spec:
+  selector:
+    app: mercato-frontend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+
+---
+# Frontend Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mercato-frontend-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mercato-frontend
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

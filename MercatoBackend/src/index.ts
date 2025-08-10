@@ -32,6 +32,8 @@ import fredRouter, { fredApiRoutes } from './routes/fredRoutes/fredRoutes'; // I
 import polymarketRoutes from './routes/mockPolymarketRoutes';
 import mockDataRoutes from './routes/mockDataRoutes';
 import mockStrategyRoutes from './routes/mockStrategyRoutes';
+import portfolioRoutes from './routes/portfolioRoutes';
+import monitoringRoutes from './routes/monitoringRoutes';
 
 // --- API Routes ---
 app.use('/api/accounts', accountsRoutes);
@@ -41,6 +43,8 @@ app.use('/api/strategies', mockStrategyRoutes); // Use mock strategy data for de
 app.use('/api', userRoutes); // Base path for user routes
 app.use('/api/fred', fredRouter);
 app.use('/api/polymarket', polymarketRoutes); // Base path for Polymarket API
+app.use('/api/portfolio', portfolioRoutes); // Portfolio management routes
+app.use('/api/monitoring', monitoringRoutes); // Real-time monitoring routes
 
 // --- Health & Meta Routes ---
 app.get('/health', (req: Request, res: Response) => {

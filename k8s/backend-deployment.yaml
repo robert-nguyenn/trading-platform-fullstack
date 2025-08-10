@@ -1,0 +1,154 @@
+# Mercato Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mercato-backend
+  labels:
+    app: mercato-backend
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mercato-backend
+  template:
+    metadata:
+      labels:
+        app: mercato-backend
+        tier: backend
+    spec:
+      containers:
+      - name: mercato-backend
+        image: mercato/backend:latest
+        ports:
+        - containerPort: 3001
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: redis-url
+        - name: ALPHA_VANTAGE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: alpha-vantage-key
+        - name: FRED_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: fred-api-key
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: openai-api-key
+        - name: ALPACA_BROKER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: alpaca-api-key
+        - name: ALPACA_BROKER_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mercato-secrets
+              key: alpaca-api-secret
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 30
+      imagePullSecrets:
+      - name: regcred
+
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mercato-backend-service
+  labels:
+    app: mercato-backend
+spec:
+  selector:
+    app: mercato-backend
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+  type: ClusterIP
+
+---
+# Horizontal Pod Autoscaler for Backend
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mercato-backend-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mercato-backend
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Pods
+    pods:
+      metric:
+        name: events_per_minute
+      target:
+        type: AverageValue
+        averageValue: "10000"
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60

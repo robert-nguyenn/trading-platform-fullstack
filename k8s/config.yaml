@@ -1,0 +1,70 @@
+# Secrets for Mercato Application
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mercato-secrets
+type: Opaque
+data:
+  # Base64 encoded values - replace with actual encoded secrets
+  database-url: cG9zdGdyZXNxbDovL3VzZXI6cGFzc0BwZy1wb29sZXI6NTQzMi9kYg== # postgresql://user:pass@pg-pooler:5432/db
+  redis-url: cmVkaXM6Ly9yZWRpcy1zZXJ2aWNlOjYzNzk= # redis://redis-service:6379
+  alpha-vantage-key: eW91cl9hbHBoYV92YW50YWdlX2tleQ== # your_alpha_vantage_key
+  fred-api-key: eW91cl9mcmVkX2FwaV9rZXk= # your_fred_api_key
+  openai-api-key: eW91cl9vcGVuYWlfa2V5 # your_openai_key
+  alpaca-api-key: eW91cl9hbHBhY2Ffa2V5 # your_alpaca_key
+  alpaca-api-secret: eW91cl9hbHBhY2Ffc2VjcmV0 # your_alpaca_secret
+  firebase-api-key: eW91cl9maXJlYmFzZV9rZXk= # your_firebase_key
+  firebase-auth-domain: eW91cl9kb21haW4uZmlyZWJhc2VhcHAuY29t # your_domain.firebaseapp.com
+
+---
+# ConfigMap for Application Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mercato-config
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  FETCHER_CONCURRENCY: "10"
+  ALPACA_IS_PAPER: "false"
+  CACHE_TTL_MULTIPLIER: "2"
+  PERFORMANCE_MONITORING: "true"
+  RAG_ENABLED: "true"
+  BACKTEST_ENABLED: "true"
+
+---
+# Service Account for Mercato
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mercato-service-account
+  labels:
+    app: mercato
+
+---
+# Role for Mercato Service Account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: mercato-role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+
+---
+# Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mercato-role-binding
+subjects:
+- kind: ServiceAccount
+  name: mercato-service-account
+roleRef:
+  kind: Role
+  name: mercato-role
+  apiGroup: rbac.authorization.k8s.io
