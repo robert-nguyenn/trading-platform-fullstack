@@ -427,15 +427,6 @@ NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
 - [ ] AI-powered market analysis
 - [ ] Enterprise-grade features
 
-## 👨‍💻 Developer
-
-**Robert Nguyen** - *Full-Stack Developer & System Architect*
-
-- 🌐 **LinkedIn**: [Connect with me](https://www.linkedin.com/in/robert-nguyenn/)
-- 📧 **Email**: robert.nguyenanh@gmail.com
-
----
-
 ### 🚀 Skills Demonstrated
 
 This project showcases advanced expertise in:
@@ -470,6 +461,15 @@ This project showcases advanced expertise in:
 - **Caching Strategy**: Multi-layer caching with intelligent invalidation
 - **Data Pipeline**: Automated data ingestion, processing, and distribution
 - **Analytics**: Advanced portfolio metrics and performance attribution analysis
+
+---
+
+## 👨‍💻 Developer
+
+**Robert Nguyen** - *Full-Stack Developer & System Architect*
+
+- 🌐 **LinkedIn**: [Connect with me](https://www.linkedin.com/in/robert-nguyenn/)
+- 📧 **Email**: robert.nguyenanh@gmail.com
 
 ---
 
