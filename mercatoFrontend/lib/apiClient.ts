@@ -5,9 +5,8 @@ UpdateStrategyDto, AllocationSummary } from './types';
 
 // *** IMPORTANT: Configure the Base URL for your ACTUAL backend API ***
 // If using Next.js API routes defined in `app/api/`, it's often just '/api'
-// If your backend runs separately (e.g., localhost:8000), use that URL.
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api'; // Use environment variable or default
-const API_BASE_URL = 'http://localhost:3001/api'; // Use environment variable or default
+// If your backend runs separately (e.g., localhost:3002), use that URL.
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002/api'; // Use environment variable or default
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

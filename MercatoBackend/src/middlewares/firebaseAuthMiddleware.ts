@@ -21,6 +21,30 @@ if (!admin.apps.length) {
 
 // Middleware using .then() and .catch()
 export const firebaseAuthMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+    // Development mode bypass
+    if (process.env.DEVELOPMENT_MODE === 'true') {
+        // Create a mock user for development
+        req.user = {
+            uid: 'dev-user-123',
+            email: 'demo@example.com',
+            name: 'Development User',
+            iss: 'https://securetoken.google.com/sphere-mvp-auth',
+            aud: 'sphere-mvp-auth',
+            auth_time: Math.floor(Date.now() / 1000),
+            user_id: 'dev-user-123',
+            sub: 'dev-user-123',
+            iat: Math.floor(Date.now() / 1000),
+            exp: Math.floor(Date.now() / 1000) + 3600,
+            firebase: {
+                identities: {},
+                sign_in_provider: 'custom'
+            }
+        };
+        console.log('🚧 Development mode: Bypassing Firebase auth');
+        next();
+        return;
+    }
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
