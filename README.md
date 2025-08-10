@@ -4,14 +4,6 @@
 
 ![Mercato Logo](./screenshots/logo.png)
 
-*Democratizing sophisticated algorithmic trading with cutting-edge technology*
-
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)](https://typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue?style=for-the-badge&logo=postgresql)](https://postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker)](https://docker.com/)
-
 </div>
 
 ## 🗂️ Table of Contents
@@ -20,12 +12,6 @@
 - [🔐 Authentication & Security](#-authentication--security)
 - [📊 Strategy Builder](#-strategy-builder)
 - [📈 Real-Time Market Data](#-real-time-market-data)
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" /> **PostgreSQL 15+** - Relational database
-- <img src="https://avatars.githubusercontent.com/u/17219288?s=48&v=4" width="20" height="20" /> **Prisma ORM** - Type-safe database client
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" width="20" height="20" /> **Redis 7+** - In-memory caching and messaging
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" width="20" height="20" /> **Firebase Auth** - Authentication service
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="20" height="20" /> **Docker** - Containerization
-- <img src="https://docs.bullmq.io/img/logo.svg" width="20" height="20" /> **BullMQ** - Job queue processing
 - [🏠 Dashboard & Portfolio](#-dashboard--portfolio)
 - [🔄 Trading Automation](#-trading-automation)
 - [📱 User Experience](#-user-experience)
@@ -33,7 +19,6 @@
 - [🛠️ Tech Stack](#️-tech-stack)
 - [🏆 Key Achievements](#-key-achievements)
 - [🚀 Getting Started](#-getting-started)
-- [📸 Screenshots](#-screenshots)
 - [🎯 Future Roadmap](#-future-roadmap)
 - [👨‍💻 Developer](#-developer)
 
