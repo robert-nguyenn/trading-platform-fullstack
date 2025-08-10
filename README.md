@@ -1,32 +1,5 @@
 # Mercato - Institutional-Grade Trading Platform
 
-<div align="center">
-- 💼 **Asset Management**: Multi-asset portf- 📊 **Holdings Visualization**: Interactive portfolio composition charts
-- 📱 **Mobile Responsive**: Full functionality across all devices
-- 🔄 **Au**Database Architecture:**
-- 🗄️ **PostgreSQL**: ACID-compliant relational database
-- 🔄 **Prisma ORM**: Type-safe database operations with automated migrations
-- ⚡ **Redis Caching**: High-performance caching for market data
-- 📊 **Real-time Sync**: Live data synchronization across users
-- 🔒 **Data Security**: Encrypted sensitive data with audit trails
-- 📈 **Scalability**: Optimized queries and indexing for high performancelancing**: Scheduled portfolio optimizationo allocation and rebalancing
-![Mercato Logo](./screenshots/logo.png)
-
-*Democratizing sophisticated algorithmic trading with cutting-edge technology*
-
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://next**System Performance:**
-- 🚀 **API Response Time**: < 200ms average for REST endpoints
-- 🔄 **Database Queries**: < 50ms execution for 90% of operations  
-- 💾 **Redis Cache Hit Rate**: 85%+ for technical indicators
-- 📊 **Technical Indicators**: Real-time calculation of 20+ indicators
-- 🌐 **Concurrent Users**: Supports 500+ simultaneous connections)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=for-the-badge&logo=typescript)](https://typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue?style=for-the-badge&logo=postgresql)](https://postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker)](https://docker.com/)
-
-</div>
-
 ## 🗂️ Table of Contents
 
 - [About The Project](#about-the-project)
