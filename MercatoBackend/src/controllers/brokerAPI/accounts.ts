@@ -3,7 +3,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { getBrokerAlpacaAuth, ALPACA_BASE_URL } from '../../utils/authUtils';
 import { PrismaClient } from '@prisma/client';
-
+//fix
 const prisma = new PrismaClient();
 dotenv.config();
 
