@@ -268,30 +268,30 @@ The platform combines a sleek React/Next.js frontend with a robust Node.js backe
 ## 🛠️ Tech Stack
 
 **Frontend Technologies:**
-- 🌐 **Next.js 15.2** - React framework with App Router
-- ⚡ **TypeScript 5.0+** - Type-safe development 
-- 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 🔧 **Radix UI** - Accessible component library
-- 📊 **Recharts** - Data visualization library
-- 🔀 **ReactFlow** - Node-based strategy builder
-- ✨ **Framer Motion** - Animation library
-- 🔄 **SWR** - Data fetching and caching
+- **Next.js 15.2** - React framework with App Router
+- **TypeScript 5.0+** - Type-safe development 
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component library
+- **Recharts** - Data visualization library
+- **ReactFlow** - Node-based strategy builder
+- **Framer Motion** - Animation library
+- **SWR** - Data fetching and caching
 
 **Backend Technologies:**
-- 🟢 **Node.js 18+** - JavaScript runtime
-- 🚀 **Express.js** - Web application framework
-- 📝 **TypeScript** - Type-safe backend development
-- 🐘 **PostgreSQL 15+** - Relational database
-- 🔗 **Prisma ORM** - Type-safe database client
-- 🔴 **Redis 7+** - In-memory caching and messaging
-- 🔥 **Firebase Auth** - Authentication service
-- 🐳 **Docker** - Containerization
-- ⚙️ **BullMQ** - Job queue processing
+- **Node.js 18+** - JavaScript runtime
+- **Express.js** - Web application framework
+- **TypeScript** - Type-safe backend development
+- **PostgreSQL 15+** - Relational database
+- **Prisma ORM** - Type-safe database client
+- **Redis 7+** - In-memory caching and messaging
+- **Firebase Auth** - Authentication service
+- **Docker** - Containerization
+- **BullMQ** - Job queue processing
 
 **External Integrations:**
-- 📈 **Alpaca Markets API** - Real-time market data & trading
-- 📊 **FRED Economic Data** - Economic indicators
-- 🎯 **Polymarket API** - Prediction market data
+- **Alpaca Markets API** - Real-time market data & trading
+- **FRED Economic Data** - Economic indicators
+- **Polymarket API** - Prediction market data
 
 ## ⚡ Performance Metrics
 
