@@ -59,13 +59,13 @@ export const startConsumer = async () => {
                              for (const [key, value] of Object.entries(payloadRaw)) {
                                   if (key === 'parameters' /* add other JSON fields if any */ ) {
                                       try {
-                                          tempPayload[key] = JSON.parse(value);
+                                          tempPayload[key] = JSON.parse(value as string);
                                       } catch (e) {
                                           throw new Error(`Failed to parse JSON field '${key}': ${value}`);
                                       }
                                   } else {
                                       // Attempt basic type inference (optional, could keep all as string)
-                                      if (!isNaN(Number(value))) {
+                                      if (!isNaN(Number(value as string))) {
                                            // tempPayload[key] = Number(value); // Be cautious with this
                                            tempPayload[key] = value; // Keep as string is safer
                                       } else {

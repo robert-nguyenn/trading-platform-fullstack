@@ -1,4 +1,3 @@
-import { createClient } from "redis"; // Assuming you might need this elsewhere, but initRedis handles client creation
 import { getRedisClient, initRedis } from "../../utils/redisClient";
 import { PrismaClient, Prisma, ActionType } from '@prisma/client';
 import { IndicatorUpdatePayload, ActionRequiredPayload } from "../strategyAPI/strategyApiTypes";
@@ -19,7 +18,7 @@ export const publishIndicatorUpdate = async (payload: IndicatorUpdatePayload) =>
         // Convert payload correctly for Redis Stream (XADD expects field-value pairs)
         const streamData: Record<string, string> = {}; // Explicitly define as string->string map
 
-        for (const [key, value] of Object.entries(payload)) {
+        for (const [key, value] of Object.entries(payload as Record<string, any>)) {
             if (value === undefined || value === null) {
                 // Skip undefined/null values or decide how to handle them
                 continue;

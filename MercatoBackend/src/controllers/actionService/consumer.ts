@@ -182,7 +182,7 @@ export const startActionConsumer = async () => {
                                 for (const [key, value] of Object.entries(payloadRaw)) {
                                     if (key === 'parameters' || key === 'triggeringIndicator') {
                                         try {
-                                            tempPayload[key] = JSON.parse(value);
+                                            tempPayload[key] = JSON.parse(value as string);
                                         } catch (e) {
                                             throw new Error(`Failed to parse JSON field '${key}': ${value}. Error: ${(e as Error).message}`);
                                         }
