@@ -11,8 +11,8 @@
 
 import { OpenAI } from 'openai';
 import { PrismaClient } from '@prisma/client';
-import { getRedisClient } from '../../utils/redisClient';
-import { publishActionRequired } from '../scheduler/redisStream';
+import { getRedisClient } from '../utils/redisClient';
+import { publishActionRequired } from '../controllers/scheduler/redisStream';
 import axios from 'axios';
 
 const prisma = new PrismaClient();

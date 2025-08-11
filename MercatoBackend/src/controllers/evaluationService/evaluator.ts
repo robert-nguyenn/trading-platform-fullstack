@@ -533,7 +533,7 @@ async function batchFetchIndicatorData(requiredKeys: Set<string>): Promise<Map<s
         
         for (let i = 0; i < results.length; i++) {
             const cacheKey = keyArray[i];
-            const result = results[i];
+            const result = results[i] as [any, string | null];
             
             if (result && result[1]) { // result[0] is error, result[1] is value
                 try {
