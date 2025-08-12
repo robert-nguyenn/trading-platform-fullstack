@@ -17,7 +17,6 @@
 - [📱 User Experience](#-user-experience)
 - [💾 Database Architecture](#-database-architecture)
 - [🛠️ Tech Stack](#️-tech-stack)
-- [🏆 Key Achievements](#-key-achievements)
 - [🚀 Getting Started](#-getting-started)
 - [🎯 Future Roadmap](#-future-roadmap)
 - [👨‍💻 Developer](#-developer)
