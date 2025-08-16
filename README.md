@@ -6,6 +6,8 @@
 
 </div>
 
+🌐 Live Demo (Beta/Watilist): https://v0-sphere-landing-page-seven.vercel.app/
+
 ## 🗂️ Table of Contents
 
 - [About The Project](#about-the-project)
